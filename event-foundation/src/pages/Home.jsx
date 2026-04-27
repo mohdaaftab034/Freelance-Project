@@ -399,11 +399,21 @@ function Home() {
       <section className="featured-gallery section reveal">
         <div className="container">
           <h2 className="section-title-center">Featured Gallery</h2>
-          <div className="masonry-grid">
+          <div className="premium-gallery-grid">
             {galleryImages.map((image, index) => (
-              <div key={image} className="masonry-item">
+              <motion.div
+                key={image}
+                className={`gallery-item item-${index}`}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.7, delay: index * 0.1, ease: [0.2, 0.8, 0.2, 1] }}
+              >
                 <img src={image} alt={`Featured event ${index + 1}`} loading="lazy" />
-              </div>
+                <div className="gallery-overlay">
+                  <span className="gallery-icon">✦</span>
+                </div>
+              </motion.div>
             ))}
           </div>
           <div className="center-btn-wrap">

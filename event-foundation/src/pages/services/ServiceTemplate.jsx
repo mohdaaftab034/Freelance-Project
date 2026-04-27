@@ -6,12 +6,18 @@ function ServiceTemplate({ title, image, breadcrumb, overview, overviewImage, in
       <section
         className="page-hero"
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.66)), url(${image})`,
+          backgroundImage: `url(${image})`,
         }}
       >
         <div className="container">
           <h1>{title}</h1>
-          <p>{breadcrumb}</p>
+          <p className="breadcrumb-wrap">
+            <Link to="/">Home</Link>
+            <span className="sep">&gt;</span>
+            <Link to="/services">Services</Link>
+            <span className="sep">&gt;</span>
+            <span className="current">{title}</span>
+          </p>
         </div>
       </section>
 

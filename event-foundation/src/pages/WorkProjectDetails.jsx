@@ -34,12 +34,18 @@ function WorkProjectDetails() {
       <section
         className="page-hero"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), url(${project.coverImage})`,
+          backgroundImage: `url(${project.coverImage})`,
         }}
       >
         <div className="container">
           <h1>{project.title}</h1>
-          <p>Our Work &gt; {project.title}</p>
+          <p className="breadcrumb-wrap">
+            <Link to="/">Home</Link>
+            <span className="sep">&gt;</span>
+            <Link to="/our-work">Our Work</Link>
+            <span className="sep">&gt;</span>
+            <span className="current">{project.title}</span>
+          </p>
         </div>
       </section>
 

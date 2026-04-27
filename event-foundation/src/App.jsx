@@ -44,12 +44,13 @@ function App() {
     if (location.hash) {
       const target = document.querySelector(location.hash)
       if (target) {
-        setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 50)
+        setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100)
       }
       return
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    // Reset scroll to top instantly on page change to avoid jitter
+    window.scrollTo(0, 0)
   }, [location.pathname, location.hash])
 
   useEffect(() => {

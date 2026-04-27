@@ -52,12 +52,16 @@ function Services() {
         className="page-hero"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.22), rgba(255,255,255,0.22)), url(https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80)',
+            'url(https://images.unsplash.com/photo-1511578314322-379afb476865?w=1920&q=80)',
         }}
       >
         <div className="container">
           <h1>Our Services</h1>
-          <p>Home &gt; Services</p>
+          <p className="breadcrumb-wrap">
+            <Link to="/">Home</Link>
+            <span className="sep">&gt;</span>
+            <span className="current">Services</span>
+          </p>
         </div>
       </section>
 
