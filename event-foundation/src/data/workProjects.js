@@ -1,0 +1,148 @@
+export const workFilters = ['All', 'Weddings', 'Corporate', 'Social', 'Destination']
+
+export const workProjects = [
+  {
+    slug: 'royal-vows-night-lucknow',
+    title: 'Royal Vows Night',
+    category: 'Weddings',
+    location: 'Taj Mahal, Lucknow',
+    year: '2025',
+    guests: '450 Guests',
+    services: 'Venue Styling, Hospitality, Entertainment',
+    summary:
+      'A grand evening wedding with a regal decor language, custom lighting design, and seamless guest-flow coordination.',
+    coverImage: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1400&q=80',
+      'https://images.unsplash.com/photo-1587271339318-2e78b7c86088?w=1400&q=80',
+      'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'leadership-summit-noida',
+    title: 'Leadership Summit',
+    category: 'Corporate',
+    location: 'Noida Expo Centre, Noida',
+    year: '2024',
+    guests: '900 Delegates',
+    services: 'Stage Production, AV, Guest Experience',
+    summary:
+      'A two-day corporate summit focused on brand storytelling, precision scheduling, and impactful keynote staging.',
+    coverImage: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1400&q=80',
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1400&q=80',
+      'https://images.unsplash.com/photo-1472653431158-6364773b2a56?w=1400&q=80',
+      'https://images.unsplash.com/photo-1542744173-05336fcc7ad4?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'destination-bliss-goa',
+    title: 'Destination Bliss',
+    category: 'Destination',
+    location: 'Candolim Coast, Goa',
+    year: '2025',
+    guests: '280 Guests',
+    services: 'Destination Planning, Logistics, Decor',
+    summary:
+      'A sunset celebration at a beachside venue featuring curated guest itineraries and premium hospitality touchpoints.',
+    coverImage: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1400&q=80',
+      'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1400&q=80',
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1400&q=80',
+      'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'family-gala-evening-lucknow',
+    title: 'Family Gala Evening',
+    category: 'Social',
+    location: 'The Grand JBR, Lucknow',
+    year: '2024',
+    guests: '600 Guests',
+    services: 'Concept Design, Artist Curation, Catering',
+    summary:
+      'A sophisticated social evening blending cultural performances with contemporary styling and immersive lighting.',
+    coverImage: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=1400&q=80',
+      'https://images.unsplash.com/photo-1529543544282-ea669407fca3?w=1400&q=80',
+      'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1400&q=80',
+      'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'grand-reception-kanpur',
+    title: 'Grand Reception',
+    category: 'Weddings',
+    location: 'Regency Ballroom, Kanpur',
+    year: '2023',
+    guests: '700 Guests',
+    services: 'Floral Art, Stage Styling, Guest Management',
+    summary:
+      'A high-volume reception engineered for smooth guest circulation, cinematic visuals, and standout decor moments.',
+    coverImage: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1400&q=80',
+      'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1400&q=80',
+      'https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'annual-excellence-awards-delhi',
+    title: 'Annual Excellence Awards',
+    category: 'Corporate',
+    location: 'Aerocity Convention Hall, Delhi',
+    year: '2025',
+    guests: '1100 Attendees',
+    services: 'Award Show Production, Protocol, Branding',
+    summary:
+      'A premium awards evening with large-format production, executive protocol, and polished brand experiences.',
+    coverImage: 'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=1400&q=80',
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?w=1400&q=80',
+      'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1400&q=80',
+      'https://images.unsplash.com/photo-1542744173-05336fcc7ad4?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'haldi-carnival-varanasi',
+    title: 'Haldi Carnival',
+    category: 'Weddings',
+    location: 'Riverside Lawn, Varanasi',
+    year: '2024',
+    guests: '320 Guests',
+    services: 'Theme Decor, Activity Zones, Entertainment',
+    summary:
+      'A vibrant day event with color-driven decor, live stations, and curated entertainment journeys for all age groups.',
+    coverImage: 'https://images.unsplash.com/photo-1587271339318-2e78b7c86088?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1587271339318-2e78b7c86088?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519741497674-611481863552?w=1400&q=80',
+      'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1400&q=80',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1400&q=80',
+    ],
+  },
+  {
+    slug: 'island-sunset-ceremony-udaipur',
+    title: 'Island Sunset Ceremony',
+    category: 'Destination',
+    location: 'Lake Pichola, Udaipur',
+    year: '2025',
+    guests: '240 Guests',
+    services: 'Travel Logistics, Floral Styling, Sound Design',
+    summary:
+      'A destination wedding with serene sunset palettes, precision logistics, and elevated guest comfort standards.',
+    coverImage: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1200&q=80',
+    images: [
+      'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1400&q=80',
+      'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1400&q=80',
+      'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=1400&q=80',
+      'https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=1400&q=80',
+    ],
+  },
+]
