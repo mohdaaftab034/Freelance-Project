@@ -1,31 +1,32 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
+import '../styles/home.css'
 
 const heroSlides = [
   {
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
-    label: 'WEDDING PLANNING · LUCKNOW',
-    title: 'Luxury Wedding Planning in Lucknow for Signature Celebrations',
+    label: '#WeddingPlanning #FloralDecoration',
+    title: 'Wedding Planning and Floral Design for Signature Celebrations',
     description:
-      'Our expert wedding planners are dedicated to curating exceptional celebrations that reflect your unique style and vision.',
+      'We design elegant weddings with cohesive planning, thoughtful decor, and smooth coordination from first consultation to final farewell.',
     ctaText: 'Contact Us',
     ctaLink: '/contact-us',
   },
   {
     image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1920&q=80',
-    label: 'CORPORATE & SOCIAL EVENTS',
-    title: 'Curating Remarkable Corporate and Social Experiences in Lucknow',
+    label: '#CorporateEvents #CelebrityEvents',
+    title: 'Corporate Events and VIP Experiences Planned with Precision',
     description:
-      'With a team of seasoned professionals, we bring your vision to life, turning ordinary events into extraordinary experiences.',
+      'From boardroom launches to high-profile occasions, we deliver polished events with discretion, structure, and impact.',
     ctaText: 'Our Services',
     ctaLink: '/#services',
   },
   {
     image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80',
-    label: 'SOCIAL & CULTURAL CELEBRATIONS',
-    title: "Lucknow's Trusted Partner for Elegant Social Celebrations",
-    description: 'We specialize in curating events that resonate with your vision and captivate your guests.',
+    label: '#BirthdayPrivateParties #DestinationEvents #CateringCoordination',
+    title: 'Private Parties and Destination Events with Seamless Hospitality',
+    description: 'We coordinate intimate celebrations, destination gatherings, and guest-ready hospitality with a refined touch.',
     ctaText: 'Explore Our Work',
     ctaLink: '/our-work',
   },
@@ -34,59 +35,52 @@ const heroSlides = [
 const serviceCards = [
   {
     icon: '✦',
-    title: 'Wedding Event',
-    text: 'Elegant wedding concepts with seamless planning and unforgettable execution.',
-    path: '/services/wedding-venues',
+    title: 'Wedding Planning',
+    text: 'Full-service planning for ceremonies, receptions, and every meaningful wedding moment.',
+    path: '/services/wedding-planning',
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80',
   },
   {
     icon: '▣',
-    title: 'Corporate Event',
-    text: 'Professional events that blend branding, precision, and premium hospitality.',
+    title: 'Corporate Events',
+    text: 'Brand-led conferences, launches, and executive gatherings delivered with precision.',
     path: '/services/corporate-events',
     image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=900&q=80',
   },
   {
     icon: '✺',
-    title: 'Social Events',
-    text: 'Personal celebrations designed with cultural richness and modern flair.',
-    path: '/services/social-events',
+    title: 'Birthday & Private Parties',
+    text: 'Stylish milestone celebrations and intimate private gatherings tailored to your guest list.',
+    path: '/services/birthday-private-parties',
     image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=900&q=80',
   },
   {
     icon: '⌘',
-    title: 'Catering Service',
-    text: 'Curated dining experiences tailored to your guests and event mood.',
-    path: '/services/catering-services',
+    title: 'Celebrity Events',
+    text: 'High-discretion event planning for premium arrivals, red-carpet moments, and VIP service.',
+    path: '/services/celebrity-events',
     image: 'https://images.unsplash.com/photo-1555244162-803834f70033?w=900&q=80',
   },
   {
     icon: '◈',
-    title: 'Entertainment Service',
-    text: 'Live performances, artists, and engagement concepts for lively events.',
-    path: '/services/entertainment-services',
+    title: 'Destination Events',
+    text: 'Travel-ready celebrations with logistics, guest care, and destination styling.',
+    path: '/services/destination-events',
     image: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=900&q=80',
   },
   {
     icon: '❖',
-    title: 'Creative & Design',
-    text: 'Bespoke visual direction for decor, invites, themes, and event identity.',
-    path: '/services/destination-wedding',
+    title: 'Floral & Decoration',
+    text: 'Bespoke decor, floral installations, and immersive event styling.',
+    path: '/services/floral-decoration',
     image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80',
   },
   {
     icon: '◉',
-    title: 'Photography & Videography',
-    text: 'Stunning cinematic coverage to preserve every emotional detail.',
-    path: '/services/photography-videography',
+    title: 'Catering Coordination',
+    text: 'Menu planning, service flow, and hospitality coordination for smooth dining experiences.',
+    path: '/services/catering-coordination',
     image: 'https://images.unsplash.com/photo-1554048612-b6a482bc67e5?w=900&q=80',
-  },
-  {
-    icon: '☰',
-    title: 'Wedding Consultancy',
-    text: 'Expert consultation for budgeting, venues, timelines, and vendor planning.',
-    path: '/services/wedding-venues',
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=900&q=80',
   },
 ]
 
@@ -156,6 +150,7 @@ const counterTargets = [
 function Home() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [activeGallerySlide, setActiveGallerySlide] = useState(0)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [counterStarted, setCounterStarted] = useState(false)
   const [counterValues, setCounterValues] = useState([0, 0, 0, 0])
@@ -215,6 +210,7 @@ function Home() {
   }, [counterStarted])
 
   const duplicatedPartners = useMemo(() => [...partners, ...partners], [])
+  const galleryTotal = galleryImages.length
 
   const handleHeroCta = (link) => {
     if (link.includes('#services')) {
@@ -237,7 +233,7 @@ function Home() {
   }
 
   return (
-    <div className="home-page">
+    <div className="home-page-luxe">
       <section className="hero-slider">
         <AnimatePresence mode="wait">
           <motion.div
@@ -305,14 +301,14 @@ function Home() {
         <div className="container about-intro-grid">
           <div>
             <span className="section-label">ABOUT US</span>
-            <h2>Bring Dreams to Life: Your #1 Wedding Planner in Lucknow</h2>
+            <h2>Bring Every Celebration to Life with Premium Event Planning</h2>
             <p>
-              Event Foundation is a premium wedding and event planning company that transforms special occasions into timeless memories.
-              Our team blends artistry with logistics to create flawless celebrations that are deeply personal and beautifully executed.
+              Event Foundation is a premium event planning company that transforms special occasions into timeless memories.
+              Our team blends artistry with logistics to create celebrations that are deeply personal and beautifully executed.
             </p>
             <p>
-              Based in Lucknow, we are known for our signature style, elevated hospitality, and attention to detail. From intimate gatherings
-              to grand celebrations, we design each event with precision, elegance, and passion.
+              Based in Lucknow, we are known for our signature style, elevated hospitality, and attention to detail. From private parties
+              to grand productions, we design each event with precision, elegance, and passion.
             </p>
 
             <div className="stats-row">
@@ -399,23 +395,56 @@ function Home() {
       <section className="featured-gallery section reveal">
         <div className="container">
           <h2 className="section-title-center">Featured Gallery</h2>
-          <div className="premium-gallery-grid">
-            {galleryImages.map((image, index) => (
+          <div className="gallery-slider-shell">
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-left"
+              aria-label="Previous image"
+              onClick={() => setActiveGallerySlide((prev) => (prev - 1 + galleryTotal) % galleryTotal)}
+            >
+              ‹
+            </button>
+
+            <div className="gallery-slider-window" aria-roledescription="carousel">
               <motion.div
-                key={image}
-                className={`gallery-item item-${index}`}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.7, delay: index * 0.1, ease: [0.2, 0.8, 0.2, 1] }}
+                className="gallery-slider-track"
+                style={{ width: `${galleryTotal * 100}%` }}
+                animate={{ x: `-${(activeGallerySlide * 100) / galleryTotal}%` }}
+                transition={{ type: 'spring', stiffness: 90, damping: 18 }}
               >
-                <img src={image} alt={`Featured event ${index + 1}`} loading="lazy" />
-                <div className="gallery-overlay">
-                  <span className="gallery-icon">✦</span>
-                </div>
+                {galleryImages.map((image, index) => (
+                  <div className="gallery-slide" key={image} style={{ width: `${100 / galleryTotal}%` }}>
+                    <img src={image} alt={`Featured event ${index + 1}`} loading="lazy" />
+                    <div className="gallery-slide-overlay">
+                      <span className="gallery-icon">✦</span>
+                    </div>
+                  </div>
+                ))}
               </motion.div>
+            </div>
+
+            <button
+              type="button"
+              className="gallery-arrow gallery-arrow-right"
+              aria-label="Next image"
+              onClick={() => setActiveGallerySlide((prev) => (prev + 1) % galleryTotal)}
+            >
+              ›
+            </button>
+          </div>
+
+          <div className="gallery-slider-dots" aria-label="Gallery navigation">
+            {galleryImages.map((image, index) => (
+              <button
+                key={image}
+                type="button"
+                className={`gallery-dot ${index === activeGallerySlide ? 'active' : ''}`}
+                aria-label={`Go to image ${index + 1}`}
+                onClick={() => setActiveGallerySlide(index)}
+              />
             ))}
           </div>
+
           <div className="center-btn-wrap">
             <Link to="/our-work" className="btn-outline">Explore Gallery</Link>
           </div>
@@ -511,13 +540,13 @@ function Home() {
               <input type="tel" placeholder="Phone" />
               <select defaultValue="">
                 <option value="" disabled>Select Service</option>
-                <option>Wedding Venues</option>
-                <option>Destination Wedding</option>
+                <option>Wedding Planning</option>
                 <option>Corporate Events</option>
-                <option>Social Events</option>
-                <option>Entertainment Services</option>
-                <option>Catering Services</option>
-                <option>Photography & Videography</option>
+                <option>Birthday & Private Parties</option>
+                <option>Celebrity Events</option>
+                <option>Destination Events</option>
+                <option>Floral & Decoration</option>
+                <option>Catering Coordination</option>
               </select>
             </div>
             <textarea rows="5" placeholder="Message" />

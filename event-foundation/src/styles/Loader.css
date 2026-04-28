@@ -1,0 +1,113 @@
+/* Loader.css */
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-dark);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* Four corner decorative dots */
+.loader-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--gold);
+  opacity: 0.4;
+}
+
+.loader-dot-1 {
+  top: -60px;
+  left: -80px;
+}
+.loader-dot-2 {
+  top: -60px;
+  right: -80px;
+}
+.loader-dot-3 {
+  bottom: -60px;
+  left: -80px;
+}
+.loader-dot-4 {
+  bottom: -60px;
+  right: -80px;
+}
+
+/* Brand heading */
+.loader-content h1 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  margin: 0 0 12px;
+  animation: loaderFadeUp 0.8s ease both;
+}
+
+.loader-content p {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 48px;
+  animation: loaderFadeUp 0.8s 0.15s ease both;
+}
+
+/* Gold progress bar */
+.loader-bar {
+  width: 200px;
+  height: 1px;
+  background: rgba(201, 169, 110, 0.15);
+  position: relative;
+  margin-bottom: 20px;
+  animation: loaderFadeUp 0.8s 0.3s ease both;
+}
+
+.loader-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--loader-progress, 0%);
+  background: var(--gold);
+  transition: width 0.04s linear;
+}
+
+/* Percent */
+.loader-percent-wrap {
+  animation: loaderFadeUp 0.8s 0.4s ease both;
+}
+
+.loader-percent {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+
+@keyframes loaderFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

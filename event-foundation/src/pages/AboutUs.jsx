@@ -32,15 +32,22 @@ function AboutUs() {
     { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 } },
     { initial: { opacity: 0, x: 30, y: 20 }, animate: { opacity: 1, x: 0, y: 0 } },
     { initial: { opacity: 0, scale: 0.9, rotate: -1 }, animate: { opacity: 1, scale: 1, rotate: 0 } },
-    { initial: { opacity: 0, scale: 0.9, rotate: 1 }, animate: { opacity: 1, scale: 1, rotate: 0 } }
-  ];
+    { initial: { opacity: 0, scale: 0.9, rotate: 1 }, animate: { opacity: 1, scale: 1, rotate: 0 } },
+  ]
 
-  const getAnimation = (index) => cardAnimations[index % cardAnimations.length];
+  const getAnimation = (index) => cardAnimations[index % cardAnimations.length]
+  const getInitials = (name) =>
+    name
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0].toUpperCase())
+      .join('')
 
   return (
-    <div className="about-page">
+    <div className="about-page about-page-luxe">
       <motion.section
-        className="page-hero"
+        className="page-hero about-luxe-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
@@ -49,9 +56,11 @@ function AboutUs() {
             'url(https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1920&q=80)',
         }}
       >
-        <div className="container">
+        <div className="about-luxe-hero-overlay" />
+        <div className="container about-luxe-hero-content">
+          <div className="about-luxe-hero-rule" />
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
@@ -61,23 +70,22 @@ function AboutUs() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="breadcrumb-wrap"
+            className="about-luxe-breadcrumb"
           >
-            <Link to="/">Home</Link>
-            <span className="sep">&gt;</span>
-            <span className="current">About Us</span>
+            HOME / ABOUT US
           </motion.p>
         </div>
       </motion.section>
 
-      <section className="section">
+      <section className="section about-story-section">
         <div className="container about-story-grid">
-          <motion.div
+          <motion.div className="about-story-copy"
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
+            <span className="about-luxe-label">Our Story</span>
             <h2>Crafting Signature Celebrations Since Day One</h2>
             <p>
               Event Foundation was founded with one clear intention: to redefine event planning in Lucknow through design-led thinking,
@@ -92,7 +100,7 @@ function AboutUs() {
               reliability, and emotional impact.
             </p>
           </motion.div>
-          <motion.div
+          <motion.div className="about-story-media"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -107,11 +115,11 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="section about-experience bg-soft">
+      <section className="section about-experience">
         <div className="container">
-          <div className="about-experience-head">
+          <div className="about-luxe-header centered">
             <motion.span 
-              className="section-label"
+              className="about-luxe-label"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -147,12 +155,12 @@ function AboutUs() {
               return (
                 <motion.article 
                   key={m.label}
+                  className="metric-card"
                   initial={anim.initial}
                   whileInView={anim.animate}
                   whileHover={{ 
-                    scale: 1.05, 
-                    boxShadow: "0 20px 40px rgba(186, 149, 86, 0.15)",
-                    borderColor: "var(--color-gold)" 
+                    borderColor: 'rgba(201,169,110,0.5)',
+                    boxShadow: '0 0 30px rgba(201,169,110,0.06)',
                   }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
@@ -166,21 +174,22 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section about-mission-vision">
         <div className="container mission-vision-grid">
           <motion.article 
             className="mission-vision-card"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             whileHover={{ 
-              y: -8, 
-              rotate: -1,
-              boxShadow: "0 25px 50px rgba(0,0,0,0.1)"
+              y: -8,
+              borderColor: 'rgba(201,169,110,0.45)',
+              boxShadow: '0 0 30px rgba(201,169,110,0.06)',
             }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="section-label">OUR MISSION</span>
+            <span className="about-card-line" />
+            <span className="about-luxe-label">OUR MISSION</span>
             <h3>Creating Seamless, Meaningful Celebrations</h3>
             <p>
               Our mission is to transform every event into a beautifully orchestrated experience where design, emotion, and
@@ -194,14 +203,15 @@ function AboutUs() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             whileHover={{ 
-              y: -8, 
-              rotate: 1,
-              boxShadow: "0 25px 50px rgba(0,0,0,0.1)"
+              y: -8,
+              borderColor: 'rgba(201,169,110,0.45)',
+              boxShadow: '0 0 30px rgba(201,169,110,0.06)',
             }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <span className="section-label">OUR VISION</span>
+            <span className="about-card-line" />
+            <span className="about-luxe-label">OUR VISION</span>
             <h3>Setting the Benchmark for Premium Event Experiences</h3>
             <p>
               We envision Event Foundation as a trusted symbol of excellence in event planning across India. By continuously
@@ -214,8 +224,8 @@ function AboutUs() {
 
       <section className="section about-strength">
         <div className="container">
-          <div className="about-experience-head">
-            <span className="section-label">EXPERTISE</span>
+          <div className="about-luxe-header centered">
+            <span className="about-luxe-label">EXPERTISE</span>
             <h2>Experience and Skill Make Us Great</h2>
             <p>
               Our strength lies in combining artistic vision with disciplined event management. From concept to execution,
@@ -228,23 +238,25 @@ function AboutUs() {
               { t: 'Strategic Planning', p: 'Detailed timelines, risk-ready execution plans, and vendor governance for flawless delivery.' },
               { t: 'Design-Led Storytelling', p: 'Immersive event environments crafted around your personality, values, and guest experience goals.' },
               { t: 'Operational Precision', p: 'Experienced on-ground teams, quality controls, and real-time coordination across every event touchpoint.' },
-              { t: 'Hospitality Excellence', p: 'Guest-focused service standards that ensure comfort, warmth, and elevated engagement throughout the event.' }
+              { t: 'Hospitality Excellence', p: 'Guest-focused service standards that ensure comfort, warmth, and elevated engagement throughout the event.' },
             ].map((s, i) => {
-              const anim = getAnimation(i + 2); // Vary starting animation
+              const anim = getAnimation(i + 2)
               return (
                 <motion.article 
                   key={s.t}
-                  initial={anim.initial}
-                  whileInView={anim.animate}
+                  className="strength-item"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   whileHover={{ 
-                    x: 10,
-                    backgroundColor: "rgba(186, 149, 86, 0.03)",
-                    borderColor: "var(--color-gold)"
+                    borderColor: 'rgba(201,169,110,0.5)',
                   }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <h3>{s.t}</h3>
+                  <div className="strength-number">{String(i + 1).padStart(2, '0')}</div>
+                  <div className="strength-title-wrap">
+                    <h3>{s.t}</h3>
+                  </div>
                   <p>{s.p}</p>
                 </motion.article>
               )
@@ -253,9 +265,12 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="section dark-section">
+      <section className="section about-team">
         <div className="container">
-          <h2 className="section-title-center">Meet Our Team</h2>
+          <div className="about-luxe-header centered">
+            <span className="about-luxe-label">Leadership</span>
+            <h2>Meet Our Team</h2>
+          </div>
           <div className="team-grid">
             {team.map((member, i) => {
               const anim = getAnimation(i);
@@ -266,18 +281,16 @@ function AboutUs() {
                   initial={anim.initial}
                   whileInView={anim.animate}
                   whileHover={{ 
-                    y: -15,
-                    boxShadow: "0 30px 60px rgba(0,0,0,0.12)"
+                    y: -8,
+                    borderColor: 'rgba(201,169,110,0.45)',
+                    boxShadow: '0 0 30px rgba(201,169,110,0.06)',
                   }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <motion.img
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    src={`https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=c9a96e&color=0a0a0a&size=200`}
-                    alt={member.name}
-                    loading="lazy"
-                  />
+                  <motion.div className="team-initials" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
+                    {getInitials(member.name)}
+                  </motion.div>
                   <h3>{member.name}</h3>
                   <p>{member.role}</p>
                 </motion.article>
@@ -287,9 +300,12 @@ function AboutUs() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section about-values">
         <div className="container">
-          <h2 className="section-title-center">Our Core Values</h2>
+          <div className="about-luxe-header centered">
+            <span className="about-luxe-label">Values</span>
+            <h2>Our Core Values</h2>
+          </div>
           <div className="values-grid">
             {values.map((value, i) => {
               const anim = getAnimation(i + 1);
@@ -300,16 +316,16 @@ function AboutUs() {
                   initial={anim.initial}
                   whileInView={anim.animate}
                   whileHover={{ 
-                    scale: 0.98,
-                    backgroundColor: "#fdf8f0"
+                    y: -6,
+                    backgroundColor: 'rgba(201,169,110,0.04)',
                   }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <motion.span
-                    animate={{ rotate: [0, 5, -5, 0] }}
-                    transition={{ repeat: Infinity, duration: 4 }}
-                  >{value.icon}</motion.span>
+                  <motion.span whileHover={{ scale: 1.2 }} transition={{ duration: 0.3 }}>
+                    {value.icon}
+                  </motion.span>
+                  <div className="value-divider" />
                   <h3>{value.title}</h3>
                   <p>{value.text}</p>
                 </motion.article>
@@ -321,6 +337,7 @@ function AboutUs() {
 
       <section className="about-cta">
         <div className="container about-cta-wrap">
+          <span className="about-luxe-label centered-label">Event Foundation</span>
           <motion.h3
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -328,11 +345,12 @@ function AboutUs() {
           >
             Ready to Plan Your Dream Event?
           </motion.h3>
+          <p>Tell us your vision and our team will craft a celebration worthy of your story.</p>
           <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
           >
-            <Link to="/contact-us" className="btn-dark">Contact Us</Link>
+            <Link to="/contact-us" className="about-cta-button">Contact Us</Link>
           </motion.div>
         </div>
       </section>

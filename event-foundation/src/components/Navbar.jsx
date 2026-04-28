@@ -1,20 +1,24 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import '../styles/Navbar.css'
 
 const serviceLinks = [
-  { label: 'Wedding Venues', path: '/services/wedding-venues' },
-  { label: 'Destination Wedding', path: '/services/destination-wedding' },
+  { label: 'Wedding Planning', path: '/services/wedding-planning' },
   { label: 'Corporate Events', path: '/services/corporate-events' },
-  { label: 'Social Events', path: '/services/social-events' },
-  { label: 'Entertainment Services', path: '/services/entertainment-services' },
-  { label: 'Catering Services', path: '/services/catering-services' },
-  { label: 'Photography & Videography', path: '/services/photography-videography' },
+  { label: 'Birthday & Private Parties', path: '/services/birthday-private-parties' },
+  { label: 'Celebrity Events', path: '/services/celebrity-events' },
+  { label: 'Destination Events', path: '/services/destination-events' },
+  { label: 'Floral & Decoration', path: '/services/floral-decoration' },
+  { label: 'Catering Coordination', path: '/services/catering-coordination' },
 ]
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [navbarVisible, setNavbarVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [scrollTimeout, setScrollTimeout] = useState(null)
   const location = useLocation()
 
   useEffect(() => {
@@ -26,12 +30,34 @@ function Navbar() {
   }, [menuOpen])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll)
-    onScroll()
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
 
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+      // Always show navbar at top of page
+      if (currentScrollY < 40) {
+        setNavbarVisible(true)
+        setScrolled(false)
+        setLastScrollY(currentScrollY)
+        return
+      }
+
+      setScrolled(true)
+
+      // Determine scroll direction and update navbar visibility
+      if (currentScrollY > lastScrollY) {
+        // Scrolling DOWN — hide navbar
+        setNavbarVisible(false)
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling UP — show navbar
+        setNavbarVisible(true)
+      }
+
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener('scroll', handleScroll, false)
+    return () => window.removeEventListener('scroll', handleScroll, false)
+  }, [lastScrollY])
 
   useEffect(() => {
     setMenuOpen(false)
@@ -39,7 +65,7 @@ function Navbar() {
   }, [location.pathname])
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${!navbarVisible ? 'navbar-hidden' : ''}`}>
       <div className="top-bar">
         <div className="container top-bar-content">
           <div className="top-contact">+91-9511118936 | +91-9511118935</div>
@@ -73,7 +99,9 @@ function Navbar() {
               <NavLink to="/about-us">About Us</NavLink>
             </li>
             <li className="nav-dropdown">
-              <NavLink to="/services" className="dropdown-trigger">Services</NavLink>
+              <NavLink to="/services" className="dropdown-trigger">
+                Services <span aria-hidden="true">▾</span>
+              </NavLink>
               <div className="dropdown-menu">
                 {serviceLinks.map((service) => (
                   <NavLink key={service.path} to={service.path}>
@@ -84,6 +112,9 @@ function Navbar() {
             </li>
             <li>
               <NavLink to="/our-work">Our Work</NavLink>
+            </li>
+            <li>
+              <NavLink to="/testimonials">Testimonials</NavLink>
             </li>
             <li>
               <NavLink to="/contact-us">Contact Us</NavLink>
@@ -143,6 +174,7 @@ function Navbar() {
             ))}
           </div>
           <NavLink to="/our-work">Our Work</NavLink>
+          <NavLink to="/testimonials">Testimonials</NavLink>
           <NavLink to="/contact-us">Contact Us</NavLink>
           <Link to="/contact-us" className="quote-btn">
             Get a Quote

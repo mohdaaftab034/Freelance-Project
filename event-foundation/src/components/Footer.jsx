@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
+import '../styles/Footer.css'
 
 const serviceLinks = [
-  { label: 'Wedding Venues', path: '/services/wedding-venues' },
-  { label: 'Destination Wedding', path: '/services/destination-wedding' },
+  { label: 'Wedding Planning', path: '/services/wedding-planning' },
   { label: 'Corporate Events', path: '/services/corporate-events' },
-  { label: 'Social Events', path: '/services/social-events' },
-  { label: 'Entertainment Services', path: '/services/entertainment-services' },
-  { label: 'Catering Services', path: '/services/catering-services' },
-  { label: 'Photography & Videography', path: '/services/photography-videography' },
+  { label: 'Birthday & Private Parties', path: '/services/birthday-private-parties' },
+  { label: 'Celebrity Events', path: '/services/celebrity-events' },
+  { label: 'Destination Events', path: '/services/destination-events' },
+  { label: 'Floral & Decoration', path: '/services/floral-decoration' },
+  { label: 'Catering Coordination', path: '/services/catering-coordination' },
 ]
 
 function Footer() {

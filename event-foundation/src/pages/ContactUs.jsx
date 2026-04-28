@@ -16,13 +16,13 @@ function ContactUs() {
   }, [isSelectOpen])
 
   const servicesList = [
-    'Wedding Venues',
-    'Destination Wedding',
+    'Wedding Planning',
     'Corporate Events',
-    'Social Events',
-    'Entertainment Services',
-    'Catering Services',
-    'Photography & Videography',
+    'Birthday & Private Parties',
+    'Celebrity Events',
+    'Destination Events',
+    'Floral & Decoration',
+    'Catering Coordination',
   ]
 
   const onSubmit = (event) => {
@@ -57,9 +57,9 @@ function ContactUs() {
   }
 
   return (
-    <div className="contact-page">
+    <div className="contact-page contact-page-luxe">
       <motion.section
-        className="page-hero"
+        className="page-hero contact-luxe-hero"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2 }}
@@ -68,7 +68,9 @@ function ContactUs() {
             'url(https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?w=1920&q=80)',
         }}
       >
-        <div className="container">
+        <div className="contact-luxe-hero-overlay" />
+        <div className="container contact-luxe-hero-content">
+          <div className="contact-luxe-hero-rule" />
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -80,7 +82,7 @@ function ContactUs() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="breadcrumb-wrap"
+            className="breadcrumb-wrap contact-luxe-breadcrumb"
           >
             <Link to="/">Home</Link>
             <span className="sep">&gt;</span>
@@ -89,7 +91,7 @@ function ContactUs() {
         </div>
       </motion.section>
 
-      <section className="section contact-premium-intro">
+      <section className="section contact-premium-intro contact-luxe-intro">
         <div className="container contact-intro-wrap">
           <motion.span
             className="section-label"
@@ -120,7 +122,7 @@ function ContactUs() {
         </div>
       </section>
 
-      <section className="section bg-soft">
+      <section className="section contact-info-section">
         <motion.div
           className="container info-cards contact-info-premium"
           variants={containerVariants}
@@ -154,7 +156,7 @@ function ContactUs() {
         </motion.div>
       </section>
 
-      <section className="section reveal">
+      <section className="section contact-form-section">
         <div className="container full-contact-form-wrap contact-form-premium-wrap">
           <motion.div
             className="contact-form-side"
@@ -214,7 +216,7 @@ function ContactUs() {
               </div>
               <textarea rows="6" placeholder="Message" />
               <motion.button
-                className="btn-gold"
+                className="contact-submit-btn"
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -242,7 +244,7 @@ function ContactUs() {
         </div>
       </section>
 
-      <section className="section social-row-section">
+      <section className="section social-row-section contact-social-section">
         <motion.div
           className="container social-links-row contact-social-premium"
           initial={{ opacity: 0, y: 20 }}

@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
 import Services from './pages/Services'
 import OurWork from './pages/OurWork'
+import Testimonials from './pages/Testimonials'
 import WorkProjectDetails from './pages/WorkProjectDetails'
 import ContactUs from './pages/ContactUs'
 import WeddingVenues from './pages/services/WeddingVenues'
@@ -90,15 +91,16 @@ function App() {
                 <Route path="/about-us" element={<PageTransition><AboutUs /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
                 <Route path="/our-work" element={<PageTransition><OurWork /></PageTransition>} />
+                <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
                 <Route path="/our-work/:slug" element={<PageTransition><WorkProjectDetails /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUs /></PageTransition>} />
-                <Route path="/services/wedding-venues" element={<PageTransition><WeddingVenues /></PageTransition>} />
-                <Route path="/services/destination-wedding" element={<PageTransition><DestinationWedding /></PageTransition>} />
+                <Route path="/services/wedding-planning" element={<PageTransition><WeddingVenues /></PageTransition>} />
                 <Route path="/services/corporate-events" element={<PageTransition><CorporateEvents /></PageTransition>} />
-                <Route path="/services/social-events" element={<PageTransition><SocialEvents /></PageTransition>} />
-                <Route path="/services/entertainment-services" element={<PageTransition><EntertainmentServices /></PageTransition>} />
-                <Route path="/services/catering-services" element={<PageTransition><CateringServices /></PageTransition>} />
-                <Route path="/services/photography-videography" element={<PageTransition><PhotographyVideography /></PageTransition>} />
+                <Route path="/services/birthday-private-parties" element={<PageTransition><SocialEvents /></PageTransition>} />
+                <Route path="/services/celebrity-events" element={<PageTransition><EntertainmentServices /></PageTransition>} />
+                <Route path="/services/destination-events" element={<PageTransition><DestinationWedding /></PageTransition>} />
+                <Route path="/services/floral-decoration" element={<PageTransition><PhotographyVideography /></PageTransition>} />
+                <Route path="/services/catering-coordination" element={<PageTransition><CateringServices /></PageTransition>} />
                 <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
               </Routes>
             </AnimatePresence>

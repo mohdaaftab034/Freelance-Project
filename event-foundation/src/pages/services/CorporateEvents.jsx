@@ -22,6 +22,13 @@ function CorporateEvents() {
         { icon: '🍽️', title: 'Hospitality', text: 'Curated food service and guest comfort management.' },
         { icon: '📈', title: 'Execution Control', text: 'On-ground team supervision and timeline compliance.' },
       ]}
+      features={[
+        { title: 'Brand-Led Design', text: 'We translate your brand story into event moments—signage, stage sets, and immersive touchpoints that reinforce your message.' },
+        { title: 'Sponsor & Partner Management', text: 'Sponsor packages, partner activations and contractual coordination handled with care.' },
+        { title: 'Custom Tech Integration', text: 'Interactive experiences, live polling, hybrid streaming and bespoke AV setups to keep audiences engaged.' },
+        { title: 'Measurement & Reporting', text: 'Post-event analytics and attendee feedback reports to measure impact and ROI.' },
+      ]}
+      styleVariant="corporate"
       gallery={[
         'https://images.unsplash.com/photo-1515169067868-5387ec356754?w=700&q=80',
         'https://images.unsplash.com/photo-1472653431158-6364773b2a56?w=700&q=80',

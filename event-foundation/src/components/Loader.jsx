@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import '../styles/Loader.css'
 
 function Loader({ onComplete }) {
   const [progress, setProgress] = useState(1)
@@ -45,7 +46,10 @@ function Loader({ onComplete }) {
 
         <h1>Event Foundation</h1>
         <p>Crafting Unforgettable Moments</p>
-        <div className="loader-bar" />
+        <div
+          className="loader-bar"
+          style={{ '--loader-progress': `${progress}%` }}
+        />
         <div className="loader-percent-wrap" aria-live="polite" aria-label={`Loading ${progress}%`}>
           <span className="loader-percent">{progress}%</span>
         </div>
