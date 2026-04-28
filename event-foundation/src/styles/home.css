@@ -686,3 +686,193 @@
     font-size: clamp(2.2rem, 8vw, 3.6rem);
   }
 }
+
+@media (max-width: 1024px) {
+  .home-page-luxe .hero-content {
+    top: 48px;
+    left: 48px;
+    max-width: 620px;
+  }
+
+  .home-page-luxe .services-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-page-luxe .counter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-page-luxe .testimonial-slider {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page-luxe .testimonial-arrow {
+    display: none;
+  }
+
+  .home-page-luxe .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page-luxe .hero-slider {
+    min-height: 72vh;
+    height: 72vh;
+  }
+
+  .home-page-luxe .hero-content {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: auto;
+    bottom: 42px;
+    width: auto;
+    min-height: auto;
+    margin-top: 0;
+    padding: 24px;
+  }
+
+  .home-page-luxe .hero-content p {
+    margin: 16px 0 28px 0;
+    font-size: 0.96rem;
+    line-height: 1.72;
+  }
+
+  .home-page-luxe .btn-gold {
+    padding: 14px 28px;
+    letter-spacing: 0.16em;
+  }
+
+  .home-page-luxe .hero-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    bottom: 58px;
+    top: auto;
+    transform: none;
+  }
+
+  .home-page-luxe .hero-arrow:hover {
+    transform: scale(1.04);
+  }
+
+  .home-page-luxe .services-card-grid,
+  .home-page-luxe .counter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page-luxe .service-card {
+    min-height: auto;
+  }
+
+  .home-page-luxe .service-card .service-card-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+  }
+
+  .home-page-luxe .service-card p {
+    margin: 0 18px 18px;
+  }
+
+  .home-page-luxe .gallery-slider-shell {
+    gap: 8px;
+    margin: 40px 0;
+  }
+
+  .home-page-luxe .gallery-slider-window {
+    height: 220px;
+  }
+
+  .home-page-luxe .gallery-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 1.1rem;
+  }
+
+  .home-page-luxe .gallery-slider-dots {
+    margin-top: 22px;
+  }
+
+  .home-page-luxe .testimonial-card {
+    padding: 34px 24px;
+  }
+
+  .home-page-luxe .testimonial-card .quote-mark {
+    font-size: 4.2rem;
+    margin-bottom: 18px;
+  }
+
+  .home-page-luxe .venue-marquee {
+    padding: 58px 0;
+  }
+
+  .home-page-luxe .venue-track {
+    gap: 24px;
+    animation-duration: 20s;
+  }
+
+  .home-page-luxe .venue-item {
+    min-width: 150px;
+    padding: 10px 14px;
+  }
+
+  .home-page-luxe .contact-content {
+    left: 20px;
+    right: 20px;
+    bottom: 24px;
+  }
+
+  .home-page-luxe .contact-form {
+    padding: 30px 22px;
+  }
+
+  .home-page-luxe .form-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .home-page-luxe .counter-grid > div {
+    padding: 26px 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page-luxe .hero-slider {
+    min-height: 68vh;
+    height: 68vh;
+  }
+
+  .home-page-luxe .hero-content {
+    left: 14px;
+    right: 14px;
+    bottom: 26px;
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .home-page-luxe .hero-content h1 {
+    font-size: clamp(2rem, 9vw, 2.9rem);
+  }
+
+  .home-page-luxe .hero-label {
+    font-size: 0.58rem;
+    letter-spacing: 0.22em;
+  }
+
+  .home-page-luxe .gallery-slider-window {
+    height: 200px;
+  }
+
+  .home-page-luxe .counter-grid h3 {
+    font-size: clamp(2.4rem, 12vw, 3.2rem);
+  }
+
+  .home-page-luxe .testimonial-card {
+    padding: 28px 20px;
+  }
+
+  .home-page-luxe .contact-form h3 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+}

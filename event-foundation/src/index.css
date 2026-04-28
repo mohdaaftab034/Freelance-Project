@@ -2588,6 +2588,214 @@ textarea { font-family: var(--font-body); }
   .floating-whatsapp { font-size: 0.65rem; padding: 10px 12px; }
 }
 
+@media (max-width: 1024px) {
+  .container {
+    width: min(94%, var(--max-width));
+  }
+
+  .page-hero {
+    min-height: 52vh;
+    height: auto;
+    padding-top: 108px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+  }
+
+  .about-page-luxe .about-story-grid,
+  .about-page-luxe .mission-vision-grid,
+  .about-page-luxe .experience-metrics,
+  .our-work-page-luxe .work-project-grid,
+  .services-page-luxe .services-luxe-grid,
+  .contact-page-luxe .contact-info-premium,
+  .contact-page-luxe .contact-form-premium-wrap,
+  .work-detail-page-luxe .work-detail-intro-grid,
+  .work-detail-page-luxe .luxe-execution-grid,
+  .work-detail-page-luxe .luxe-related-grid,
+  .testimonials-page-luxe .testimonials-stats-grid,
+  .testimonials-page-luxe .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-page-luxe .container,
+  .our-work-page-luxe .container,
+  .services-page-luxe .container,
+  .contact-page-luxe .container,
+  .work-detail-page-luxe .container,
+  .testimonials-page-luxe .container {
+    padding: 0 28px;
+  }
+
+  .work-detail-page-luxe .luxe-meta-grid,
+  .contact-page-luxe .info-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .our-work-page-luxe .work-project-grid {
+    gap: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: min(92%, var(--max-width));
+  }
+
+  .section {
+    padding: 70px 0;
+  }
+
+  .section-title-center {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    margin-bottom: 28px;
+  }
+
+  .page-hero {
+    min-height: 300px;
+    padding-top: 88px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3.6rem);
+    margin-bottom: 16px;
+  }
+
+  .about-page-luxe .container,
+  .our-work-page-luxe .container,
+  .services-page-luxe .container,
+  .contact-page-luxe .container,
+  .work-detail-page-luxe .container,
+  .testimonials-page-luxe .container {
+    padding: 0 20px;
+  }
+
+  .about-page-luxe .team-grid,
+  .about-page-luxe .values-grid,
+  .about-page-luxe .experience-metrics,
+  .our-work-page-luxe .work-project-grid,
+  .services-page-luxe .services-luxe-grid,
+  .contact-page-luxe .contact-info-premium,
+  .contact-page-luxe .info-cards,
+  .contact-page-luxe .form-grid,
+  .work-detail-page-luxe .luxe-meta-grid,
+  .work-detail-page-luxe .luxe-execution-grid,
+  .work-detail-page-luxe .luxe-related-grid,
+  .testimonials-page-luxe .testimonials-stats-grid,
+  .testimonials-page-luxe .testimonials-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .our-work-page-luxe .filter-tabs-inner {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .our-work-page-luxe .filter-tabs-inner button {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    scroll-snap-align: start;
+  }
+
+  .contact-page-luxe .contact-form.wide,
+  .services-page-luxe .contact-form.wide,
+  .work-detail-page-luxe .work-detail-cta-wrap,
+  .testimonials-page-luxe .testimonials-cta-wrap {
+    padding: 34px 22px;
+  }
+
+  .work-detail-page-luxe .project-carousel-nav {
+    width: 38px;
+    height: 38px;
+    font-size: 1.4rem;
+  }
+
+  .work-detail-page-luxe .project-carousel-slide {
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-detail-page-luxe .work-detail-hero-content {
+    padding-bottom: 56px;
+  }
+
+  .footer-shell {
+    padding: 28px 20px;
+  }
+
+  .floating-enquiry,
+  .floating-whatsapp {
+    bottom: 14px;
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: min(94%, var(--max-width));
+  }
+
+  .section {
+    padding: 58px 0;
+  }
+
+  .section-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.22em;
+  }
+
+  .btn-gold,
+  .btn-outline,
+  .btn-dark {
+    padding: 11px 20px;
+    font-size: 0.72rem;
+  }
+
+  .page-hero {
+    min-height: 260px;
+    padding-top: 82px;
+  }
+
+  .page-hero h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  .about-page-luxe .about-story-copy h2,
+  .contact-page-luxe .contact-intro-wrap h2,
+  .services-page-luxe .services-intro-wrap h2,
+  .our-work-page-luxe .work-intro-copy h2,
+  .work-detail-page-luxe .work-detail-intro-copy h2,
+  .testimonials-page-luxe .testimonials-intro-wrap h2,
+  .testimonials-page-luxe .testimonials-grid-header h2,
+  .testimonials-page-luxe .testimonials-cta-wrap h2 {
+    font-size: clamp(1.8rem, 8vw, 2.4rem);
+  }
+
+  .work-detail-page-luxe .project-carousel-slide {
+    aspect-ratio: 1 / 1;
+  }
+
+  .work-detail-page-luxe .work-detail-cta-wrap,
+  .testimonials-page-luxe .testimonials-cta-wrap {
+    padding: 28px 18px;
+  }
+
+  .footer-bottom {
+    padding: 16px 12px 8px;
+    font-size: 0.7rem;
+  }
+
+  .floating-enquiry,
+  .floating-whatsapp {
+    font-size: 0.6rem;
+    bottom: 12px;
+  }
+}
+
 @media (max-width: 480px) {
   .container { width: 94%; }
   .hero-slider { min-height: 70vh; height: 70vh; }

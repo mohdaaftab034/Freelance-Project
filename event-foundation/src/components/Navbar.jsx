@@ -23,9 +23,11 @@ function Navbar() {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
+    document.body.classList.toggle('mobile-menu-open', menuOpen)
 
     return () => {
       document.body.style.overflow = ''
+      document.body.classList.remove('mobile-menu-open')
     }
   }, [menuOpen])
 
@@ -122,7 +124,7 @@ function Navbar() {
           </ul>
 
           <div className="nav-right">
-            <Link to="/contact-us" className="quote-btn desktop-only">
+            <Link to="/contact-us" className="quote-btn header-quote-btn">
               Get a Quote
             </Link>
             <button
@@ -139,8 +141,12 @@ function Navbar() {
         </div>
       </nav>
 
-      <div className={`mobile-overlay ${menuOpen ? 'open' : ''}`}>
-        <div className="mobile-menu">
+      <div
+        className={`mobile-overlay ${menuOpen ? 'open' : ''}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden={!menuOpen}
+      >
+        <div className="mobile-menu" onClick={(event) => event.stopPropagation()}>
           <div className="mobile-menu-head">
             <span>Menu</span>
             <button
@@ -157,16 +163,16 @@ function Navbar() {
             Home
           </NavLink>
           <NavLink to="/about-us">About Us</NavLink>
-          <NavLink to="/services">Services</NavLink>
           <button
             type="button"
             className={`mobile-services-toggle ${mobileServicesOpen ? 'open' : ''}`}
             onClick={() => setMobileServicesOpen((prev) => !prev)}
           >
-            <span>Services</span>
+            <span>Explore Services</span>
             <span className="mobile-arrow" aria-hidden="true">▾</span>
           </button>
           <div className={`mobile-services-list ${mobileServicesOpen ? 'open' : ''}`}>
+            <NavLink to="/services">All Services</NavLink>
             {serviceLinks.map((service) => (
               <NavLink key={service.path} to={service.path}>
                 {service.label}
