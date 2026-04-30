@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { workFilters } from '../data/workProjects'
 import { getProjects } from '../utils/api'
 
 function OurWork() {
+  useDocumentTitle('Our Work')
   const [activeFilter, setActiveFilter] = useState('All')
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)

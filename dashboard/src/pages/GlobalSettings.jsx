@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiSave, FiFacebook, FiInstagram, FiTwitter, FiLinkedin, FiYoutube, FiPhone, FiMail, FiMapPin, FiMessageCircle } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import '../styles/GlobalSettings.css';
 
 function GlobalSettings() {
+  useDocumentTitle('Global Settings')
   const [settings, setSettings] = useState({
     socialLinks: {
       facebook: '',

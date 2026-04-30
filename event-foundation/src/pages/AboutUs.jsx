@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getTeamMembers } from '../utils/api'
@@ -23,6 +24,7 @@ const values = [
 ]
 
 function AboutUs() {
+  useDocumentTitle('About Us')
   const [teamMembers, setTeamMembers] = useState([])
   const [loading, setLoading] = useState(true)
 

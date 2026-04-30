@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiEye, FiTrash2, FiX, FiCheckCircle, FiClock, FiMail, FiPhone, FiCalendar, FiTag, FiUser, FiMessageCircle, FiSend } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import '../styles/Enquiries.css';
 
 function Enquiries() {
+  useDocumentTitle('Lead Management')
   const [enquiries, setEnquiries] = useState([]);
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

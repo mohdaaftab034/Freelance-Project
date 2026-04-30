@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { getTestimonials } from '../utils/api'
@@ -19,6 +20,7 @@ const getInitials = (name) =>
     .join('')
 
 function Testimonials() {
+  useDocumentTitle('Testimonials')
   const [testimonials, setTestimonials] = useState([])
   const [loading, setLoading] = useState(true)
 

@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiPlus, FiTrash2, FiSave, FiImage, FiTrendingUp, FiUsers, FiX, FiCheck } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import '../styles/HomeManagement.css';
 
 function HomeManagement() {
+  useDocumentTitle('Home Page Management')
   const [activeTab, setActiveTab] = useState('hero');
 
   const [heroSlides, setHeroSlides] = useState([]);

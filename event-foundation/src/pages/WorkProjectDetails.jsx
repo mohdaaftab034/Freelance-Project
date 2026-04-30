@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useEffect, useMemo, useState } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link, useParams } from 'react-router-dom'
 import { getProjects, getProjectBySlug } from '../utils/api'
 
@@ -9,6 +10,8 @@ function WorkProjectDetails() {
   const [projects, setProjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeImage, setActiveImage] = useState(0)
+
+  useDocumentTitle(project ? project.title : 'Loading Project...')
 
   const relatedProjects = useMemo(() => {
     if (!project || !projects) return []

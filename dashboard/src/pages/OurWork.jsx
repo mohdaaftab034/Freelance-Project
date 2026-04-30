@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiTrash2, FiX, FiUploadCloud, FiEdit, FiPlus, FiImage, FiSettings, FiType, FiPackage, FiGrid } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import { ALLOWED_SERVICES } from '../utils/constants';

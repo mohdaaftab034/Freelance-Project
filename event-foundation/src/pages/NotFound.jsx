@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 
 function NotFound() {
+  useDocumentTitle('404 - Page Not Found')
   return (
     <section className="not-found section">
       <div className="container">

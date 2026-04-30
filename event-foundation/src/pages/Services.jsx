@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { getServices } from '../utils/api'
 
 function Services() {
+  useDocumentTitle('Our Services')
   const [services, setServices] = useState([])
   const [loading, setLoading] = useState(true)
 

@@ -1,3 +1,4 @@
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import LegalPage from './LegalPage'
 import '../styles/legal-pages.css'
 
@@ -61,6 +62,7 @@ const sections = [
 ]
 
 function LegalPrivacy() {
+  useDocumentTitle('Privacy Policy')
   return (
     <LegalPage
       title="Privacy Policy"

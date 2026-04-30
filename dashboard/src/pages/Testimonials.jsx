@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiEdit, FiTrash2, FiStar, FiX, FiPlus, FiCheckCircle, FiCircle, FiUser } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import { ALLOWED_SERVICES } from '../utils/constants';
 import '../styles/Testimonials.css';
 
 function Testimonials() {
+  useDocumentTitle('Testimonials Management')
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);

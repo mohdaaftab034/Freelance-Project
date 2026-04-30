@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import '../styles/DashboardHome.css';
 import { FiCalendar, FiUsers, FiLayers, FiMessageSquare } from 'react-icons/fi';
 
 function DashboardHome() {
+  useDocumentTitle('Performance Overview')
   const [stats, setStats] = useState({
     enquiries: 0,
     services: 0,

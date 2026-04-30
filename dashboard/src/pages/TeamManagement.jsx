@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiPlus, FiEdit2, FiTrash2, FiSave, FiX, FiCamera, FiLink } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import '../styles/TeamManagement.css';
 
 function TeamManagement() {
+  useDocumentTitle('Team Management')
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);

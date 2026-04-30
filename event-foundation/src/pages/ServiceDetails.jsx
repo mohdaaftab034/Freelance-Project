@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { useParams, Link } from 'react-router-dom'
 import ServiceTemplate from './services/ServiceTemplate'
 import { getServiceBySlug } from '../utils/api'
@@ -8,6 +9,8 @@ function ServiceDetails() {
   const [service, setService] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
+
+  useDocumentTitle(service ? service.title : 'Loading Service...')
 
   useEffect(() => {
     const fetchService = async () => {

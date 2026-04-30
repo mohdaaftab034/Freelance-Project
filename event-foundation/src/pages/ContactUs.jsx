@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { submitEnquiry, getSettings } from '../utils/api'
 
 function ContactUs() {
+  useDocumentTitle('Contact Us')
   const [submitted, setSubmitted] = useState(false)
   const [service, setService] = useState('')
   const [isSelectOpen, setIsSelectOpen] = useState(false)

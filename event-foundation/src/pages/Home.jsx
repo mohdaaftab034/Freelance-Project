@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import useDocumentTitle from '../hooks/useDocumentTitle'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { submitEnquiry, getHomeContent, getTestimonials, getServices, getProjects } from '../utils/api'
@@ -125,6 +126,7 @@ const defaultCounterTargets = [
 ]
 
 function Home() {
+  useDocumentTitle('Premium Wedding & Event Planners in Lucknow')
   const [activeSlide, setActiveSlide] = useState(0)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [activeGallerySlide, setActiveGallerySlide] = useState(0)

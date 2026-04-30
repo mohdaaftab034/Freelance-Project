@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import useDocumentTitle from '../hooks/useDocumentTitle';
 import { FiEdit, FiTrash2, FiX, FiPlus, FiLink, FiImage, FiList, FiCheckCircle, FiClock, FiGrid, FiSettings, FiPackage, FiType, FiUploadCloud } from 'react-icons/fi';
 import { API_BASE_URL } from '../config';
 import '../styles/Services.css';
@@ -7,6 +8,7 @@ import { ALLOWED_SERVICES } from '../utils/constants';
 
 
 function Services() {
+  useDocumentTitle('Services Management')
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
