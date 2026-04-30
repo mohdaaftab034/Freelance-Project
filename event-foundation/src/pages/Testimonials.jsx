@@ -1,50 +1,7 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-
-const testimonials = [
-  {
-    quote:
-      'Event Foundation brought structure, warmth, and a refined eye for detail to our celebration. Everything felt seamless, elevated, and deeply personal.',
-    name: 'Shivani & Arjun',
-    role: 'Wedding Clients',
-    event: 'Luxury Wedding Reception',
-  },
-  {
-    quote:
-      'Their team transformed a complex corporate launch into a polished experience with flawless coordination and strong creative direction.',
-    name: 'Amit Verma',
-    role: 'Brand Marketing Lead',
-    event: 'Product Launch Event',
-  },
-  {
-    quote:
-      'The hospitality, visual styling, and calm execution were exceptional. Our guests noticed every thoughtful detail and loved the atmosphere.',
-    name: 'Nandini Rao',
-    role: 'Private Celebration Host',
-    event: 'Birthday Celebration',
-  },
-  {
-    quote:
-      'Working with them felt effortless from planning through execution. They understood our vision quickly and elevated it with premium taste.',
-    name: 'Kabir Singh',
-    role: 'Destination Client',
-    event: 'Destination Event',
-  },
-  {
-    quote:
-      'The decor, artist coordination, and guest flow were handled with rare precision. We could relax because every moving part was already under control.',
-    name: 'Maya Khanna',
-    role: 'Family Host',
-    event: 'Engagement Celebration',
-  },
-  {
-    quote:
-      'They delivered a premium experience without feeling overproduced. The event was tasteful, composed, and exactly what we hoped for.',
-    name: 'Rohan Mehta',
-    role: 'Corporate Client',
-    event: 'Annual Gathering',
-  },
-]
+import { getTestimonials } from '../utils/api'
 
 const stats = [
   { value: '500+', label: 'Events Delivered' },
@@ -62,6 +19,25 @@ const getInitials = (name) =>
     .join('')
 
 function Testimonials() {
+  const [testimonials, setTestimonials] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const data = await getTestimonials()
+        if (data.success) {
+          setTestimonials(data.data)
+        }
+      } catch (error) {
+        console.error('Error fetching testimonials:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTestimonials()
+  }, [])
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -173,31 +149,41 @@ function Testimonials() {
             </p>
           </div>
 
-          <motion.div
-            className="testimonials-grid"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            {testimonials.map((item) => (
-              <motion.article key={item.name} className="testimonial-card-luxe" variants={cardVariants}>
-                <div className="testimonial-card-top">
-                  <span className="testimonial-monogram" aria-hidden="true">
-                    {getInitials(item.name)}
-                  </span>
-                  <span className="testimonial-event-pill">{item.event}</span>
-                </div>
-                <div className="testimonial-card-body">
-                  <span className="testimonial-quote-mark">❝</span>
-                  <p>{item.quote}</p>
-                  <div className="testimonial-divider" />
-                  <h3>{item.name}</h3>
-                  <span>{item.role}</span>
-                </div>
-              </motion.article>
-            ))}
-          </motion.div>
+          {loading ? (
+            <div className="loading-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+              <p>Loading curated experiences...</p>
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="empty-container" style={{ textAlign: 'center', padding: '100px 0' }}>
+              <p>No testimonials available at the moment.</p>
+            </div>
+          ) : (
+            <motion.div
+              className="testimonials-grid"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {testimonials.map((item) => (
+                <motion.article key={item._id} className="testimonial-card-luxe" variants={cardVariants}>
+                  <div className="testimonial-card-top">
+                    <span className="testimonial-monogram" aria-hidden="true">
+                      {getInitials(item.name)}
+                    </span>
+                    <span className="testimonial-event-pill">{item.event}</span>
+                  </div>
+                  <div className="testimonial-card-body">
+                    <span className="testimonial-quote-mark">❝</span>
+                    <p>{item.quote}</p>
+                    <div className="testimonial-divider" />
+                    <h3>{item.name}</h3>
+                    <span>{item.role}</span>
+                  </div>
+                </motion.article>
+              ))}
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -219,3 +205,4 @@ function Testimonials() {
 }
 
 export default Testimonials
+

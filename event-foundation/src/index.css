@@ -254,6 +254,32 @@ textarea { font-family: var(--font-body); }
   50% { transform: translateY(-3px); }
 }
 
+/* Global Luxe Loader */
+.luxe-loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid rgba(186, 149, 86, 0.1);
+  border-top: 3px solid var(--color-gold);
+  border-radius: 50%;
+  animation: luxe-spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin: 0 auto;
+}
+
+@keyframes luxe-spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state-luxe {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-text-muted);
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.2rem;
+  border: 1px dashed var(--color-border);
+  border-radius: 16px;
+}
+
 .site-header {
   position: fixed;
   top: 0;

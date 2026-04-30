@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getSettings } from '../utils/api'
 import '../styles/Footer.css'
 
 const serviceLinks = [
@@ -12,6 +14,18 @@ const serviceLinks = [
 ]
 
 function Footer() {
+  const [settings, setSettings] = useState(null)
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const data = await getSettings()
+      if (data.success) {
+        setSettings(data.data)
+      }
+    }
+    fetchSettings()
+  }, [])
+
   return (
     <footer className="site-footer reveal">
       <div className="container footer-shell">
@@ -36,18 +50,28 @@ function Footer() {
           </div>
 
           <div className="footer-col">
+            <h4>Legal</h4>
+            <ul>
+              <li><Link to="/terms-and-conditions">Terms &amp; Conditions</Link></li>
+              <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+            </ul>
+          </div>
+
+          <div className="footer-col">
             <h4>Contact</h4>
-            <p className="footer-contact">Lucknow, Uttar Pradesh</p>
-            <p className="footer-contact">+91-9511118936</p>
-            <p className="footer-contact">contact@eventfoundation.in</p>
+            <p className="footer-contact">{settings?.contactDetails?.address || 'Lucknow, Uttar Pradesh'}</p>
+            <p className="footer-contact">{settings?.contactDetails?.phonePrimary || '+91-9511118936'}</p>
+            <p className="footer-contact">{settings?.contactDetails?.email || 'contact@eventfoundation.in'}</p>
           </div>
 
           <div className="footer-col">
             <h4>Social</h4>
             <ul>
-              <li><a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a></li>
-              <li><a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a></li>
-              <li><a href="https://youtube.com" target="_blank" rel="noreferrer">YouTube</a></li>
+              {settings?.socialLinks?.instagram && <li><a href={settings.socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</a></li>}
+              {settings?.socialLinks?.facebook && <li><a href={settings.socialLinks.facebook} target="_blank" rel="noreferrer">Facebook</a></li>}
+              {settings?.socialLinks?.youtube && <li><a href={settings.socialLinks.youtube} target="_blank" rel="noreferrer">YouTube</a></li>}
+              {settings?.socialLinks?.twitter && <li><a href={settings.socialLinks.twitter} target="_blank" rel="noreferrer">Twitter</a></li>}
+              {settings?.socialLinks?.linkedin && <li><a href={settings.socialLinks.linkedin} target="_blank" rel="noreferrer">LinkedIn</a></li>}
             </ul>
           </div>
         </div>
@@ -63,10 +87,11 @@ function Footer() {
 
       <div className="footer-bottom-line" />
       <div className="footer-bottom">
-        <p>© 2025 Event Foundation. All Rights Reserved.</p>
+        <p>© 2026 Event Foundation. All Rights Reserved.</p>
       </div>
     </footer>
   )
 }
 
 export default Footer
+

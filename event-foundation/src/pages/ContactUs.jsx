@@ -1,11 +1,31 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { submitEnquiry, getSettings } from '../utils/api'
 
 function ContactUs() {
   const [submitted, setSubmitted] = useState(false)
   const [service, setService] = useState('')
   const [isSelectOpen, setIsSelectOpen] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [settings, setSettings] = useState(null)
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const data = await getSettings()
+      if (data.success) {
+        setSettings(data.data)
+      }
+    }
+    fetchSettings()
+  }, [])
+
 
   useEffect(() => {
     const closeSelect = () => setIsSelectOpen(false)
@@ -25,12 +45,43 @@ function ContactUs() {
     'Catering Coordination',
   ]
 
-  const onSubmit = (event) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const onSubmit = async (event) => {
     event.preventDefault()
-    setSubmitted(true)
-    event.target.reset()
-    setService('')
-    setTimeout(() => setSubmitted(false), 3200)
+    if (!service) {
+      alert('Please select a service')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const data = await submitEnquiry({
+        ...formData,
+        eventType: service,
+      })
+
+      if (data.success) {
+        setSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        })
+        setService('')
+        setTimeout(() => setSubmitted(false), 3200)
+      } else {
+        alert('Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting enquiry:', error)
+      alert('Error connecting to server.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const containerVariants = {
@@ -135,23 +186,22 @@ function ContactUs() {
               <span className="accent-line" />
             </div>
             <h3>Address</h3>
-            <p>10th Floor, Wing A, Summit Building, Vibhuti Khand, Gomti Nagar, Lucknow - 226010</p>
+            <p>{settings?.contactDetails?.address || '10th Floor, Wing A, Summit Building, Vibhuti Khand, Gomti Nagar, Lucknow - 226010'}</p>
           </motion.article>
           <motion.article className="contact-info-card" variants={cardVariants}>
             <div className="premium-card-header">
               <span className="accent-line" />
             </div>
             <h3>Phone</h3>
-            <p>+91-9511118936</p>
-            <p>+91-9511118935</p>
+            <p>{settings?.contactDetails?.phonePrimary || '+91-9511118936'}</p>
+            <p>{settings?.contactDetails?.phoneSecondary || '+91-9511118935'}</p>
           </motion.article>
           <motion.article className="contact-info-card" variants={cardVariants}>
             <div className="premium-card-header">
               <span className="accent-line" />
             </div>
             <h3>Email</h3>
-            <p>contact@eventfoundation.in</p>
-            <p>support@eventfoundation.in</p>
+            <p>{settings?.contactDetails?.email || 'contact@eventfoundation.in'}</p>
           </motion.article>
         </motion.div>
       </section>
@@ -169,9 +219,29 @@ function ContactUs() {
               <h3>Plan Your Premium Event Consultation</h3>
               <p className="contact-form-subtext">Share your requirements and our team will connect with a tailored proposal.</p>
               <div className="form-grid">
-                <input type="text" placeholder="Name*" required />
-                <input type="email" placeholder="Email*" required />
-                <input type="tel" placeholder="Phone" />
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Name*"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email*"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  placeholder="Phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
                 <div className="custom-select-wrap">
                   <div 
                     className={`custom-select-trigger ${isSelectOpen ? 'active' : ''}`}
@@ -214,14 +284,22 @@ function ContactUs() {
                   </AnimatePresence>
                 </div>
               </div>
-              <textarea rows="6" placeholder="Message" />
+              <textarea
+                name="message"
+                rows="6"
+                placeholder="Message"
+                required
+                value={formData.message}
+                onChange={handleChange}
+              />
               <motion.button
                 className="contact-submit-btn"
                 type="submit"
+                disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Submit Enquiry
+                {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
               </motion.button>
               {submitted && <p className="form-success">Thanks for contacting us. We will connect with you shortly.</p>}
             </form>
@@ -245,18 +323,19 @@ function ContactUs() {
       </section>
 
       <section className="section social-row-section contact-social-section">
-        <motion.div
-          className="container social-links-row contact-social-premium"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</motion.a>
-          <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</motion.a>
-          <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href="https://youtube.com" target="_blank" rel="noreferrer">YouTube</motion.a>
-          <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</motion.a>
-        </motion.div>
+          <motion.div
+            className="container social-links-row contact-social-premium"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            {settings?.socialLinks?.facebook && <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href={settings.socialLinks.facebook} target="_blank" rel="noreferrer">Facebook</motion.a>}
+            {settings?.socialLinks?.instagram && <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href={settings.socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</motion.a>}
+            {settings?.socialLinks?.youtube && <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href={settings.socialLinks.youtube} target="_blank" rel="noreferrer">YouTube</motion.a>}
+            {settings?.socialLinks?.linkedin && <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href={settings.socialLinks.linkedin} target="_blank" rel="noreferrer">LinkedIn</motion.a>}
+            {settings?.socialLinks?.twitter && <motion.a whileHover={{ y: -5, color: 'var(--color-gold)' }} href={settings.socialLinks.twitter} target="_blank" rel="noreferrer">Twitter</motion.a>}
+          </motion.div>
       </section>
     </div>
   )

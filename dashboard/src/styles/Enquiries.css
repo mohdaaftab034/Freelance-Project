@@ -1,0 +1,459 @@
+.enquiries-container-luxe {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 40px;
+}
+
+/* Leads Grid */
+.leads-grid-luxe {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.lead-card-luxe {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.lead-card-luxe:hover {
+  border-color: var(--color-gold);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+}
+
+.lead-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-tag-luxe {
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-tag-luxe.new { background: #f0f9ff; color: #0369a1; }
+.status-tag-luxe.contacted { background: #fefce8; color: #854d0e; }
+.status-tag-luxe.closed { background: #f0fdf4; color: #166534; }
+
+.lead-date-luxe {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.lead-card-body {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.lead-avatar-luxe {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.lead-name-luxe {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.lead-type-luxe {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+.lead-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.lead-contact-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lead-contact-strip svg { color: var(--color-gold); flex-shrink: 0; }
+
+.lead-view-btn {
+  background: none;
+  border: none;
+  color: var(--color-gold);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+/* Modal Redesign - Detail Popup */
+.modal-overlay-luxe {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.detail-popup-luxe {
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  height: 90vh; /* Increased for better view */
+  max-height: 900px;
+  border-radius: 32px;
+  overflow: hidden;
+  display: flex;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+}
+
+.popup-sidebar {
+  width: 320px;
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  overflow-y: auto; /* Sidebar itself scrollable if needed */
+}
+
+.sidebar-top {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.enquiry-avatar-large {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  color: white;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.15);
+}
+
+.popup-name {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.popup-type-tag {
+  background: var(--color-gold);
+  color: white;
+  padding: 6px 16px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.sidebar-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-item-luxe label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+.contact-item-luxe p {
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.95rem;
+  word-break: break-all;
+}
+
+.status-options-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sidebar-label {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+.status-opt-btn {
+  background: white;
+  border: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.status-opt-btn .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+}
+
+.status-opt-btn.active {
+  border-color: var(--color-gold);
+  background: white;
+  color: #0f172a;
+  box-shadow: 0 4px 12px rgba(186, 149, 86, 0.1);
+}
+
+.status-opt-btn.active .dot {
+  background: var(--color-gold);
+}
+
+.popup-main {
+  flex: 1;
+  background: white;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Main wrapper hidden to contain scrollable body */
+}
+
+.popup-header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.btn-close-luxe {
+  background: #f1f5f9;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.popup-body-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  flex: 1;
+  overflow-y: auto; /* This makes the content scrollable */
+  padding-right: 10px;
+}
+
+/* Custom Scrollbar */
+.popup-body-content::-webkit-scrollbar,
+.popup-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.popup-body-content::-webkit-scrollbar-thumb,
+.popup-sidebar::-webkit-scrollbar-thumb {
+  background: #e2e8f0;
+  border-radius: 10px;
+}
+
+.section-title-luxe {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+
+.section-title-luxe svg { color: var(--color-gold); font-size: 1.1rem; }
+
+.requirement-card {
+  background: #fffaf0;
+  border-left: 6px solid var(--color-gold);
+  padding: 32px;
+  border-radius: 0 20px 20px 0;
+}
+
+.requirement-card p {
+  font-size: 1.1rem;
+  color: #0f172a;
+  line-height: 1.8;
+  font-family: var(--font-heading);
+}
+
+.action-buttons-luxe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.action-btn-luxe {
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid #e2e8f0;
+  background: white;
+  color: #334155;
+  flex: 1;
+  min-width: 140px;
+  justify-content: center;
+}
+
+.action-btn-luxe.primary {
+  background: #0f172a;
+  color: white;
+  border: none;
+}
+
+.action-btn-luxe.danger {
+  color: #ef4444;
+  border-color: #fee2e2;
+}
+
+@media (max-width: 1024px) {
+  .detail-popup-luxe {
+    flex-direction: column;
+    height: 90vh;
+    max-height: none;
+  }
+  
+  .popup-sidebar {
+    width: 100%;
+    padding: 24px;
+    flex-direction: column;
+    gap: 24px;
+    height: auto;
+    max-height: 300px;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .sidebar-top {
+    flex-direction: row;
+    text-align: left;
+    justify-content: flex-start;
+  }
+  
+  .enquiry-avatar-large {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+    border-radius: 12px;
+  }
+  
+  .popup-name { font-size: 1.25rem; }
+  
+  .sidebar-contact-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  
+  .status-options-column {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  
+  .status-opt-btn { white-space: nowrap; }
+
+  .popup-main {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .leads-grid-luxe {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar-contact-list {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-buttons-luxe {
+    flex-direction: column;
+  }
+  
+  .action-btn-luxe {
+    width: 100%;
+  }
+  
+  .requirement-card {
+    padding: 20px;
+  }
+  
+  .requirement-card p {
+    font-size: 1rem;
+  }
+}

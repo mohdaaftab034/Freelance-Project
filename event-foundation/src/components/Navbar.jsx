@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import { getSettings } from '../utils/api'
 import '../styles/Navbar.css'
 
 const serviceLinks = [
@@ -18,8 +19,18 @@ function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [navbarVisible, setNavbarVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
-  const [scrollTimeout, setScrollTimeout] = useState(null)
+  const [settings, setSettings] = useState(null)
   const location = useLocation()
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      const data = await getSettings()
+      if (data.success) {
+        setSettings(data.data)
+      }
+    }
+    fetchSettings()
+  }, [])
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
@@ -35,7 +46,6 @@ function Navbar() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
 
-      // Always show navbar at top of page
       if (currentScrollY < 40) {
         setNavbarVisible(true)
         setScrolled(false)
@@ -45,12 +55,9 @@ function Navbar() {
 
       setScrolled(true)
 
-      // Determine scroll direction and update navbar visibility
       if (currentScrollY > lastScrollY) {
-        // Scrolling DOWN — hide navbar
         setNavbarVisible(false)
       } else if (currentScrollY < lastScrollY) {
-        // Scrolling UP — show navbar
         setNavbarVisible(true)
       }
 
@@ -66,24 +73,25 @@ function Navbar() {
     setMobileServicesOpen(false)
   }, [location.pathname])
 
+
+
   return (
     <header className={`site-header ${!navbarVisible ? 'navbar-hidden' : ''}`}>
       <div className="top-bar">
         <div className="container top-bar-content">
-          <div className="top-contact">+91-9511118936 | +91-9511118935</div>
+          <div className="top-contact">
+            {settings?.contactDetails?.phonePrimary || '+91-9511118936'} | {settings?.contactDetails?.phoneSecondary || '+91-9511118935'}
+          </div>
           <div className="top-socials" aria-label="Social media links">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook">
-              FB
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram">
-              IG
-            </a>
-            <a href="https://youtube.com" target="_blank" rel="noreferrer" aria-label="YouTube">
-              YT
-            </a>
+            {settings?.socialLinks?.facebook && <a href={settings.socialLinks.facebook} target="_blank" rel="noreferrer">FB</a>}
+            {settings?.socialLinks?.instagram && <a href={settings.socialLinks.instagram} target="_blank" rel="noreferrer">IG</a>}
+            {settings?.socialLinks?.twitter && <a href={settings.socialLinks.twitter} target="_blank" rel="noreferrer">TW</a>}
+            {settings?.socialLinks?.linkedin && <a href={settings.socialLinks.linkedin} target="_blank" rel="noreferrer">LI</a>}
+            {settings?.socialLinks?.youtube && <a href={settings.socialLinks.youtube} target="_blank" rel="noreferrer">YT</a>}
           </div>
         </div>
       </div>
+
 
       <nav className={`main-nav ${scrolled ? 'scrolled' : ''}`}>
         <div className="container nav-content">

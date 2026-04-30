@@ -1,0 +1,151 @@
+.login-container-luxe {
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  background: white;
+}
+
+.login-visual-panel {
+  flex: 1.2;
+  position: relative;
+  background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80');
+  background-size: cover;
+  background-position: center;
+}
+
+.visual-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(186, 149, 86, 0.3) 100%);
+}
+
+.visual-content {
+  position: absolute;
+  bottom: 80px;
+  left: 80px;
+  color: white;
+  z-index: 10;
+  max-width: 500px;
+}
+
+.visual-content h1 {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.visual-content p {
+  font-size: 1.25rem;
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.login-form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  background: white;
+}
+
+.login-box-luxe {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login-header-luxe {
+  margin-bottom: 48px;
+}
+
+.login-title-luxe {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 12px;
+}
+
+.login-subtitle-luxe {
+  font-size: 1rem;
+  color: #64748b;
+}
+
+.login-form-luxe {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.login-error-msg {
+  background: #fef2f2;
+  color: #b91c1c;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid #fee2e2;
+  text-align: center;
+}
+
+
+.form-group-luxe {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-primary-luxe {
+  background: #0f172a;
+  color: white;
+  border: none;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+}
+
+.btn-primary-luxe:hover {
+  background: var(--color-gold);
+  transform: translateY(-2px);
+}
+
+.login-footer-luxe {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 40px;
+}
+
+@media (max-width: 1200px) {
+  .visual-content {
+    left: 40px;
+    bottom: 40px;
+  }
+  .visual-content h1 {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .login-visual-panel {
+    display: none;
+  }
+  .login-form-panel {
+    flex: 1;
+    padding: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-title-luxe {
+    font-size: 2rem;
+  }
+  .login-header-luxe {
+    margin-bottom: 32px;
+  }
+}

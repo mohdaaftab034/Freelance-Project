@@ -8,6 +8,7 @@ function ServiceTemplate({
   breadcrumb,
   overview = [],
   overviewImage,
+  excellenceImage,
   included = [],
   gallery = [],
   features = [],
@@ -28,7 +29,7 @@ function ServiceTemplate({
       label: 'Why Choose Us',
       heading: 'Tailored Excellence',
       text: overview.slice(3),
-      image: overviewImage,
+      image: excellenceImage || overviewImage,
     },
   ].filter((section) => section.text.length > 0 && section.image)
 

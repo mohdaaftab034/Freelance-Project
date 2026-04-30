@@ -25,7 +25,7 @@
   font-weight: 300;
   font-size: 0.7rem;
   letter-spacing: 0.2em;
-  color: var(--text-muted);
+  color: black
 }
 
 .top-socials a {
@@ -33,7 +33,7 @@
   font-size: 0.65rem;
   font-weight: 500;
   letter-spacing: 0.25em;
-  color: var(--text-muted);
+  color: rgb(3, 3, 3);
   text-decoration: none;
   margin-left: 28px;
   text-transform: uppercase;

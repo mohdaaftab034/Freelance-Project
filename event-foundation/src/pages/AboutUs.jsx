@@ -1,12 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-
-const team = [
-  { name: 'Aarav Singh', role: 'Founder & Creative Director' },
-  { name: 'Neha Kapoor', role: 'Head of Weddings' },
-  { name: 'Rohan Malhotra', role: 'Operations Lead' },
-  { name: 'Sara Khan', role: 'Client Experience Manager' },
-]
+import { getTeamMembers } from '../utils/api'
+import '../styles/home.css'
 
 const values = [
   {
@@ -27,7 +23,28 @@ const values = [
 ]
 
 function AboutUs() {
+  const [teamMembers, setTeamMembers] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const data = await getTeamMembers()
+        if (data.success) {
+          setTeamMembers(data.data)
+        }
+
+      } catch (error) {
+        console.error('Error fetching team:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchTeam()
+  }, [])
+
   const cardAnimations = [
+
     { initial: { opacity: 0, x: -30, y: 20 }, animate: { opacity: 1, x: 0, y: 0 } },
     { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 } },
     { initial: { opacity: 0, x: 30, y: 20 }, animate: { opacity: 1, x: 0, y: 0 } },
@@ -115,10 +132,43 @@ function AboutUs() {
         </div>
       </section>
 
+      <section className="wedding-story-about section reveal">
+        <div className="container wedding-story-grid-alt">
+          <motion.div 
+            className="wedding-story-content"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="about-luxe-label">Wedding Excellence</span>
+            <h2>A Legacy of Luxurious Weddings</h2>
+            <p>
+              Our expertise in wedding planning is built on a foundation of trust and artistic brilliance. We understand that 
+              a wedding is more than just an event; it's the beginning of a new chapter. That's why we pour our hearts into 
+              every project, ensuring that the elegance of the decor and the precision of the planning work in perfect harmony.
+            </p>
+            <p>
+              Whether it's a traditional heritage wedding or a contemporary chic celebration, our team is dedicated to 
+              providing a level of service that is as extraordinary as the love it celebrates.
+            </p>
+          </motion.div>
+          <motion.div 
+            className="wedding-story-media"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <img src="/wedding1.png" alt="Wedding Excellence" className="wedding-png-luxe" />
+          </motion.div>
+        </div>
+      </section>
+
       <section className="section about-experience">
         <div className="container">
           <div className="about-luxe-header centered">
-            <motion.span 
+            <motion.span
               className="about-luxe-label"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
@@ -153,12 +203,12 @@ function AboutUs() {
             ].map((m, i) => {
               const anim = getAnimation(i);
               return (
-                <motion.article 
+                <motion.article
                   key={m.label}
                   className="metric-card"
                   initial={anim.initial}
                   whileInView={anim.animate}
-                  whileHover={{ 
+                  whileHover={{
                     borderColor: 'rgba(201,169,110,0.5)',
                     boxShadow: '0 0 30px rgba(201,169,110,0.06)',
                   }}
@@ -176,11 +226,11 @@ function AboutUs() {
 
       <section className="section about-mission-vision">
         <div className="container mission-vision-grid">
-          <motion.article 
+          <motion.article
             className="mission-vision-card"
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            whileHover={{ 
+            whileHover={{
               y: -8,
               borderColor: 'rgba(201,169,110,0.45)',
               boxShadow: '0 0 30px rgba(201,169,110,0.06)',
@@ -198,11 +248,11 @@ function AboutUs() {
             </p>
           </motion.article>
 
-          <motion.article 
+          <motion.article
             className="mission-vision-card"
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            whileHover={{ 
+            whileHover={{
               y: -8,
               borderColor: 'rgba(201,169,110,0.45)',
               boxShadow: '0 0 30px rgba(201,169,110,0.06)',
@@ -242,12 +292,12 @@ function AboutUs() {
             ].map((s, i) => {
               const anim = getAnimation(i + 2)
               return (
-                <motion.article 
+                <motion.article
                   key={s.t}
                   className="strength-item"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  whileHover={{ 
+                  whileHover={{
                     borderColor: 'rgba(201,169,110,0.5)',
                   }}
                   viewport={{ once: true }}
@@ -272,15 +322,17 @@ function AboutUs() {
             <h2>Meet Our Team</h2>
           </div>
           <div className="team-grid">
-            {team.map((member, i) => {
+            {loading ? (
+              <div style={{ gridColumn: '1/-1', textAlign: 'center', opacity: 0.7 }}>Loading our expert team...</div>
+            ) : teamMembers.map((member, i) => {
               const anim = getAnimation(i);
               return (
-                <motion.article 
-                  key={member.name} 
+                <motion.article
+                  key={member.name + i}
                   className="team-card"
                   initial={anim.initial}
                   whileInView={anim.animate}
-                  whileHover={{ 
+                  whileHover={{
                     y: -8,
                     borderColor: 'rgba(201,169,110,0.45)',
                     boxShadow: '0 0 30px rgba(201,169,110,0.06)',
@@ -288,15 +340,24 @@ function AboutUs() {
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <motion.div className="team-initials" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
-                    {getInitials(member.name)}
+                  <motion.div className="team-media-wrap" whileHover={{ scale: 1.02 }} transition={{ duration: 0.3 }}>
+                    {member.image ? (
+                      <img src={member.image} alt={member.name} className="team-photo-dynamic" />
+                    ) : (
+                      <div className="team-initials">{getInitials(member.name)}</div>
+                    )}
                   </motion.div>
                   <h3>{member.name}</h3>
                   <p>{member.role}</p>
+                  <div className="team-social-mini">
+                    {member.socialLinks?.instagram && <a href={member.socialLinks.instagram} target="_blank" rel="noreferrer">Instagram</a>}
+                    {member.socialLinks?.linkedin && <a href={member.socialLinks.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
+                  </div>
                 </motion.article>
               )
             })}
           </div>
+
         </div>
       </section>
 
@@ -310,12 +371,12 @@ function AboutUs() {
             {values.map((value, i) => {
               const anim = getAnimation(i + 1);
               return (
-                <motion.article 
-                  key={value.title} 
+                <motion.article
+                  key={value.title}
                   className="value-card"
                   initial={anim.initial}
                   whileInView={anim.animate}
-                  whileHover={{ 
+                  whileHover={{
                     y: -6,
                     backgroundColor: 'rgba(201,169,110,0.04)',
                   }}

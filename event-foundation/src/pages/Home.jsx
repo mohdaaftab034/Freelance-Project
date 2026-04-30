@@ -1,36 +1,20 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
+import { submitEnquiry, getHomeContent, getTestimonials, getServices, getProjects } from '../utils/api'
 import '../styles/home.css'
 
-const heroSlides = [
+// Move static data into a fallback object or handle it in state
+const defaultHeroSlides = [
   {
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&q=80',
     label: '#WeddingPlanning #FloralDecoration',
     title: 'Wedding Planning and Floral Design for Signature Celebrations',
-    description:
-      'We design elegant weddings with cohesive planning, thoughtful decor, and smooth coordination from first consultation to final farewell.',
+    description: 'We design elegant weddings with cohesive planning, thoughtful decor, and smooth coordination from first consultation to final farewell.',
     ctaText: 'Contact Us',
     ctaLink: '/contact-us',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=1920&q=80',
-    label: '#CorporateEvents #CelebrityEvents',
-    title: 'Corporate Events and VIP Experiences Planned with Precision',
-    description:
-      'From boardroom launches to high-profile occasions, we deliver polished events with discretion, structure, and impact.',
-    ctaText: 'Our Services',
-    ctaLink: '/#services',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1920&q=80',
-    label: '#BirthdayPrivateParties #DestinationEvents #CateringCoordination',
-    title: 'Private Parties and Destination Events with Seamless Hospitality',
-    description: 'We coordinate intimate celebrations, destination gatherings, and guest-ready hospitality with a refined touch.',
-    ctaText: 'Explore Our Work',
-    ctaLink: '/our-work',
-  },
-]
+  }
+];
 
 const serviceCards = [
   {
@@ -129,18 +113,11 @@ const testimonials = [
   },
 ]
 
-const partners = [
-  'Golden Tulip',
-  'Taj Hotel',
-  'Radisson Blu',
-  'Vivanta',
-  'The Grand JBR',
-  'Piccadily',
-  'Hyatt Regency',
-  'Holiday Inn',
+const defaultPartners = [
+  'Golden Tulip', 'Taj Hotel', 'Radisson Blu', 'Vivanta', 'The Grand JBR'
 ]
 
-const counterTargets = [
+const defaultCounterTargets = [
   { value: 10000, label: 'Events', suffix: 'k+' },
   { value: 5000, label: 'Celebrity Events', suffix: 'k+' },
   { value: 3000, label: 'Sweet Couples', suffix: 'k+' },
@@ -151,27 +128,158 @@ function Home() {
   const [activeSlide, setActiveSlide] = useState(0)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [activeGallerySlide, setActiveGallerySlide] = useState(0)
+  const [homeContent, setHomeContent] = useState({
+    heroSlides: defaultHeroSlides,
+    partners: defaultPartners,
+    counters: defaultCounterTargets
+  })
+  const [testimonials, setTestimonials] = useState([])
+  const [loadingTestimonials, setLoadingTestimonials] = useState(true)
+  const [services, setServices] = useState([])
+  const [loadingServices, setLoadingServices] = useState(true)
+  const [galleryImages, setGalleryImages] = useState([])
+  const [loadingGallery, setLoadingGallery] = useState(true)
+  const [isDataLoaded, setIsDataLoaded] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    service: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [counterStarted, setCounterStarted] = useState(false)
-  const [counterValues, setCounterValues] = useState([0, 0, 0, 0])
+  
+  const { heroSlides, partners, counters: counterTargets } = homeContent
+
+  useEffect(() => {
+    setActiveSlide(0)
+  }, [heroSlides.length])
+
+  const [counterValues, setCounterValues] = useState(counterTargets.map(() => 0))
   const counterSectionRef = useRef(null)
   const navigate = useNavigate()
 
   useEffect(() => {
-    const slideInterval = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
+    const fetchContent = async () => {
+      console.log('Fetching home content...');
+      const data = await getHomeContent()
+      console.log('Fetched home content:', data);
+      if (data.success && data.data) {
+        setHomeContent(data.data)
+        setIsDataLoaded(true)
+      }
+    }
 
-    return () => clearInterval(slideInterval)
+    const fetchTestimonials = async () => {
+      try {
+        const data = await getTestimonials()
+        if (data.success && data.data.length > 0) {
+          setTestimonials(data.data)
+        } else {
+          // Use default static testimonials if DB is empty
+          const staticTestimonials = [
+            { name: 'Sachin', quote: 'Event Foundation brought grace and discipline to every detail of our wedding.' },
+            { name: 'Shoib', quote: 'They transformed our corporate annual meet into a world-class production.' },
+            { name: 'Priyanshu Verma', quote: 'Creative, responsive, and truly premium in execution.' }
+          ];
+          setTestimonials(staticTestimonials);
+        }
+      } catch (error) {
+        console.error('Error fetching testimonials:', error);
+      } finally {
+        setLoadingTestimonials(false);
+      }
+    }
+
+    const fetchServices = async () => {
+      try {
+        const data = await getServices()
+        if (data.success && data.data.length > 0) {
+          setServices(data.data)
+        } else {
+          // Keep static services if DB is empty (already defined as serviceCards)
+          setServices(serviceCards)
+        }
+      } catch (error) {
+        console.error('Error fetching services:', error)
+      } finally {
+        setLoadingServices(false)
+      }
+    }
+
+    const fetchGalleryImages = async () => {
+      try {
+        const data = await getProjects()
+        if (data.success && data.data.length > 0) {
+          const allImages = []
+          data.data.forEach(project => {
+            if (project.coverImage) {
+              allImages.push({
+                url: project.coverImage,
+                title: project.title,
+                slug: project.slug
+              })
+            }
+            if (project.images && project.images.length > 0) {
+              project.images.forEach(imgUrl => {
+                allImages.push({
+                  url: imgUrl,
+                  title: project.title,
+                  slug: project.slug
+                })
+              })
+            }
+          })
+          setGalleryImages(allImages)
+        } else {
+          // Use default static gallery if DB is empty
+          const staticGallery = [
+            { url: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80', title: 'Luxury Wedding', slug: 'wedding' },
+            { url: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80', title: 'Corporate Gala', slug: 'corporate' },
+            { url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80', title: 'Floral Design', slug: 'floral' }
+          ];
+          setGalleryImages(staticGallery)
+        }
+      } catch (error) {
+        console.error('Error fetching gallery images:', error)
+      } finally {
+        setLoadingGallery(false)
+      }
+    }
+
+    fetchContent()
+    fetchTestimonials()
+    fetchServices()
+    fetchGalleryImages()
   }, [])
 
   useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % (heroSlides.length || 1))
+    }, 5000)
+
+    return () => clearInterval(slideInterval)
+  }, [heroSlides.length])
+
+  useEffect(() => {
+    if (testimonials.length === 0) return;
     const testimonialInterval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
     }, 4000)
 
     return () => clearInterval(testimonialInterval)
-  }, [])
+  }, [testimonials.length])
+
+  useEffect(() => {
+    if (galleryImages.length === 0) return;
+    const galleryInterval = setInterval(() => {
+      setActiveGallerySlide((prev) => (prev + 1) % galleryImages.length)
+    }, 2000)
+
+    return () => clearInterval(galleryInterval)
+  }, [galleryImages.length])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -201,15 +309,18 @@ function Home() {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
 
-      setCounterValues(counterTargets.map((target) => Math.floor(target.value * progress)))
+      setCounterValues(counterTargets.map((target) => {
+        const numValue = parseInt(String(target.value).replace(/[^0-9]/g, '')) || 0;
+        return Math.floor(numValue * progress);
+      }))
 
       if (progress >= 1) clearInterval(timer)
     }, 40)
 
     return () => clearInterval(timer)
-  }, [counterStarted])
+  }, [counterStarted, counterTargets])
 
-  const duplicatedPartners = useMemo(() => [...partners, ...partners], [])
+  const duplicatedPartners = useMemo(() => [...partners, ...partners, ...partners], [partners])
   const galleryTotal = galleryImages.length
 
   const handleHeroCta = (link) => {
@@ -225,11 +336,46 @@ function Home() {
     navigate(link)
   }
 
-  const onSubmit = (event) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const onSubmit = async (event) => {
     event.preventDefault()
-    setFormSubmitted(true)
-    event.target.reset()
-    setTimeout(() => setFormSubmitted(false), 3000)
+    if (!formData.service) {
+      alert('Please select a service')
+      return
+    }
+
+    setIsSubmitting(true)
+    try {
+      const data = await submitEnquiry({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        eventType: formData.service,
+        message: formData.message,
+      })
+
+      if (data.success) {
+        setFormSubmitted(true)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          service: '',
+          message: '',
+        })
+        setTimeout(() => setFormSubmitted(false), 3000)
+      } else {
+        alert('Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting enquiry:', error)
+      alert('Error connecting to server.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -351,18 +497,44 @@ function Home() {
         </div>
       </section>
 
+      <section className="wedding-story-home section reveal">
+        <div className="container wedding-story-grid">
+          <div className="wedding-story-media">
+            <img src="/wedding.png" alt="Wedding Story" className="wedding-png-luxe" />
+          </div>
+          <div className="wedding-story-content">
+            <span className="section-label">OUR WEDDING STORY</span>
+            <h2>Crafting the wedding of your dreams with perfection</h2>
+            <p>
+              At Event Foundation, we believe that every wedding is a unique masterpiece. Our journey starts with your vision, 
+              which we meticulously translate into a breathtaking reality. From grand venue transformations to the most delicate 
+              floral details, we ensure that your special day reflects your personality and love story.
+            </p>
+            <p>
+              Our expert planners handle everything with a refined touch, allowing you to immerse yourself in the joy of the moment 
+              while we orchestrate a seamless celebration that will be cherished for a lifetime.
+            </p>
+            <Link to="/services/wedding-planning" className="btn-gold">Explore Wedding Services</Link>
+          </div>
+        </div>
+      </section>
+
       <section className="services-grid section reveal" id="services">
         <div className="container">
           <h2 className="section-title-center">Our Services</h2>
           <div className="services-card-grid">
-            {serviceCards.map((card) => (
-              <article key={card.title} className="service-card" onClick={() => navigate(card.path)} role="button" tabIndex={0}>
+            {loadingServices ? (
+               <div style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px 0', opacity: 0.7 }}>
+                  <p>Loading signature services...</p>
+               </div>
+            ) : services.map((card) => (
+              <article key={card.title} className="service-card" onClick={() => navigate(`/services/${card.slug}`)} role="button" tabIndex={0}>
                 <div className="service-card-media">
                   <img src={card.image} alt={card.title} loading="lazy" />
-                  <span className="service-icon">{card.icon}</span>
+                  <span className="service-icon">{card.serviceIcon || '✦'}</span>
                 </div>
                 <h3>{card.title}</h3>
-                <p>{card.text}</p>
+                <p>{card.description || card.text}</p>
               </article>
             ))}
           </div>
@@ -395,55 +567,70 @@ function Home() {
       <section className="featured-gallery section reveal">
         <div className="container">
           <h2 className="section-title-center">Featured Gallery</h2>
-          <div className="gallery-slider-shell">
-            <button
-              type="button"
-              className="gallery-arrow gallery-arrow-left"
-              aria-label="Previous image"
-              onClick={() => setActiveGallerySlide((prev) => (prev - 1 + galleryTotal) % galleryTotal)}
-            >
-              ‹
-            </button>
+          {loadingGallery ? (
+             <div style={{ textAlign: 'center', padding: '60px 0', opacity: 0.7 }}>
+                <p>Loading visuals...</p>
+             </div>
+          ) : galleryImages.length > 0 ? (
+            <>
+              <div className="gallery-slider-shell">
+                <button
+                  type="button"
+                  className="gallery-arrow gallery-arrow-left"
+                  aria-label="Previous image"
+                  onClick={() => setActiveGallerySlide((prev) => (prev - 1 + galleryImages.length) % galleryImages.length)}
+                >
+                  ‹
+                </button>
 
-            <div className="gallery-slider-window" aria-roledescription="carousel">
-              <motion.div
-                className="gallery-slider-track"
-                style={{ width: `${galleryTotal * 100}%` }}
-                animate={{ x: `-${(activeGallerySlide * 100) / galleryTotal}%` }}
-                transition={{ type: 'spring', stiffness: 90, damping: 18 }}
-              >
-                {galleryImages.map((image, index) => (
-                  <div className="gallery-slide" key={image} style={{ width: `${100 / galleryTotal}%` }}>
-                    <img src={image} alt={`Featured event ${index + 1}`} loading="lazy" />
-                    <div className="gallery-slide-overlay">
-                      <span className="gallery-icon">✦</span>
-                    </div>
-                  </div>
+                <div className="gallery-slider-window" aria-roledescription="carousel">
+                  <motion.div
+                    className="gallery-slider-track"
+                    style={{ width: `${galleryImages.length * 100}%` }}
+                    animate={{ x: `-${(activeGallerySlide * 100) / galleryImages.length}%` }}
+                    transition={{ type: 'spring', stiffness: 90, damping: 18 }}
+                  >
+                    {galleryImages.map((item, index) => (
+                      <div 
+                        className="gallery-slide" 
+                        key={`${item.url}-${index}`} 
+                        style={{ width: `${100 / galleryImages.length}%`, cursor: 'pointer' }}
+                        onClick={() => navigate(`/our-work/${item.slug}`)}
+                      >
+                        <img src={item.url} alt={item.title} loading="lazy" />
+                        <div className="gallery-slide-overlay">
+                          <span className="gallery-category">Featured Work</span>
+                          <h4 className="gallery-project-title">{item.title}</h4>
+                          <span className="gallery-view-btn">View Project ⟶</span>
+                        </div>
+                      </div>
+                    ))}
+                  </motion.div>
+                </div>
+
+                <button
+                  type="button"
+                  className="gallery-arrow gallery-arrow-right"
+                  aria-label="Next image"
+                  onClick={() => setActiveGallerySlide((prev) => (prev + 1) % galleryImages.length)}
+                >
+                  ›
+                </button>
+              </div>
+
+              <div className="gallery-slider-dots" aria-label="Gallery navigation">
+                {galleryImages.slice(0, 15).map((image, index) => (
+                  <button
+                    key={`${image}-${index}`}
+                    type="button"
+                    className={`gallery-dot ${index === activeGallerySlide ? 'active' : ''}`}
+                    aria-label={`Go to image ${index + 1}`}
+                    onClick={() => setActiveGallerySlide(index)}
+                  />
                 ))}
-              </motion.div>
-            </div>
-
-            <button
-              type="button"
-              className="gallery-arrow gallery-arrow-right"
-              aria-label="Next image"
-              onClick={() => setActiveGallerySlide((prev) => (prev + 1) % galleryTotal)}
-            >
-              ›
-            </button>
-          </div>
-
-          <div className="gallery-slider-dots" aria-label="Gallery navigation">
-            {galleryImages.map((image, index) => (
-              <button
-                key={image}
-                type="button"
-                className={`gallery-dot ${index === activeGallerySlide ? 'active' : ''}`}
-                aria-label={`Go to image ${index + 1}`}
-                onClick={() => setActiveGallerySlide(index)}
-              />
-            ))}
-          </div>
+              </div>
+            </>
+          ) : null}
 
           <div className="center-btn-wrap">
             <Link to="/our-work" className="btn-outline">Explore Gallery</Link>
@@ -455,7 +642,11 @@ function Home() {
         <div className="container counter-grid">
           {counterTargets.map((counter, index) => (
             <div key={counter.label}>
-              <h3>{Math.floor(counterValues[index] / 1000)}{counter.suffix}</h3>
+              <h3>
+                {counterValues[index] >= (parseInt(String(counter.value).replace(/[^0-9]/g, '')) || 0) 
+                  ? counter.value 
+                  : `${counterValues[index]}${String(counter.value).replace(/[0-9]/g, '')}`}
+              </h3>
               <p>{counter.label}</p>
             </div>
           ))}
@@ -465,41 +656,53 @@ function Home() {
       <section className="testimonial-section section reveal">
         <div className="container">
           <h2 className="section-title-center">What Our Clients Say</h2>
-          <div className="testimonial-slider">
-            <button
-              type="button"
-              className="testimonial-arrow"
-              aria-label="Previous testimonial"
-              onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-            >
-              ‹
-            </button>
-            <div className="testimonial-card">
-              <span className="quote-mark">❝</span>
-              <p>{testimonials[activeTestimonial].review}</p>
-              <h4>{testimonials[activeTestimonial].name}</h4>
-              <div className="stars">★★★★★</div>
-            </div>
-            <button
-              type="button"
-              className="testimonial-arrow"
-              aria-label="Next testimonial"
-              onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
-            >
-              ›
-            </button>
-          </div>
-          <div className="testimonial-dots">
-            {testimonials.map((testimonial, index) => (
-              <button
-                key={testimonial.name}
-                type="button"
-                className={index === activeTestimonial ? 'active' : ''}
-                aria-label={`Go to testimonial ${index + 1}`}
-                onClick={() => setActiveTestimonial(index)}
-              />
-            ))}
-          </div>
+          {testimonials.length > 0 ? (
+            <>
+              <div className="testimonial-slider">
+                <button
+                  type="button"
+                  className="testimonial-arrow"
+                  aria-label="Previous testimonial"
+                  onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                >
+                  ‹
+                </button>
+                <div className="testimonial-card">
+                  <span className="quote-mark">❝</span>
+                  <p>{testimonials[activeTestimonial]?.quote || testimonials[activeTestimonial]?.review}</p>
+                  <h4>{testimonials[activeTestimonial]?.name}</h4>
+                  <div className="stars">
+                    {Array.from({ length: testimonials[activeTestimonial]?.rating || 5 }).map((_, i) => (
+                      <span key={i}>★</span>
+                    ))}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  className="testimonial-arrow"
+                  aria-label="Next testimonial"
+                  onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
+                >
+                  ›
+                </button>
+              </div>
+              <div className="testimonial-dots">
+                {testimonials.map((testimonial, index) => (
+                  <button
+                    key={testimonial._id || index}
+                    type="button"
+                    className={index === activeTestimonial ? 'active' : ''}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                    onClick={() => setActiveTestimonial(index)}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+             <div style={{ textAlign: 'center', padding: '40px 0', opacity: 0.7 }}>
+                <p>Loading testimonials...</p>
+             </div>
+          )}
         </div>
       </section>
 
@@ -535,22 +738,56 @@ function Home() {
           <form className="contact-form" onSubmit={onSubmit}>
             <h3>Send Enquiry</h3>
             <div className="form-grid">
-              <input type="text" placeholder="Name*" required />
-              <input type="email" placeholder="Email*" required />
-              <input type="tel" placeholder="Phone" />
-              <select defaultValue="">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name*"
+                required
+                value={formData.name}
+                onChange={handleChange}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email*"
+                required
+                value={formData.email}
+                onChange={handleChange}
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone"
+                value={formData.phone}
+                onChange={handleChange}
+              />
+              <select
+                name="service"
+                value={formData.service}
+                onChange={handleChange}
+                required
+              >
                 <option value="" disabled>Select Service</option>
-                <option>Wedding Planning</option>
-                <option>Corporate Events</option>
-                <option>Birthday & Private Parties</option>
-                <option>Celebrity Events</option>
-                <option>Destination Events</option>
-                <option>Floral & Decoration</option>
-                <option>Catering Coordination</option>
+                <option value="Wedding Planning">Wedding Planning</option>
+                <option value="Corporate Events">Corporate Events</option>
+                <option value="Birthday & Private Parties">Birthday & Private Parties</option>
+                <option value="Celebrity Events">Celebrity Events</option>
+                <option value="Destination Events">Destination Events</option>
+                <option value="Floral & Decoration">Floral & Decoration</option>
+                <option value="Catering Coordination">Catering Coordination</option>
               </select>
             </div>
-            <textarea rows="5" placeholder="Message" />
-            <button className="btn-gold" type="submit">Submit Enquiry</button>
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Message"
+              required
+              value={formData.message}
+              onChange={handleChange}
+            />
+            <button className="btn-gold" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Submit Enquiry'}
+            </button>
             {formSubmitted && <p className="form-success">Thank you! Your enquiry has been submitted.</p>}
           </form>
         </div>

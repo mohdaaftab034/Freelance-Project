@@ -1,10 +1,29 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { workFilters, workProjects } from '../data/workProjects'
+import { workFilters } from '../data/workProjects'
+import { getProjects } from '../utils/api'
 
 function OurWork() {
   const [activeFilter, setActiveFilter] = useState('All')
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await getProjects()
+        if (data.success) {
+          setProjects(data.data)
+        }
+      } catch (error) {
+        console.error('Error loading projects:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchProjects()
+  }, [])
 
   const cardAnimations = [
     { initial: { opacity: 0, x: -24, y: 18 }, animate: { opacity: 1, x: 0, y: 0 } },
@@ -17,9 +36,9 @@ function OurWork() {
   const filterReveal = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }
 
   const filteredWorks = useMemo(() => {
-    if (activeFilter === 'All') return workProjects
-    return workProjects.filter((item) => item.category === activeFilter)
-  }, [activeFilter])
+    if (activeFilter === 'All') return projects
+    return projects.filter((item) => item.category === activeFilter)
+  }, [activeFilter, projects])
 
   return (
     <div className="our-work-page our-work-page-luxe">
@@ -94,7 +113,18 @@ function OurWork() {
         <div className="container">
           <motion.div layout className="work-project-grid">
             <AnimatePresence mode="popLayout">
-              {filteredWorks.length === 0 ? (
+              {loading ? (
+                <motion.div
+                  key="loading"
+                  className="loading-state-luxe"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '100px 0' }}
+                >
+                  <div className="luxe-loader"></div>
+                  <p style={{ marginTop: '20px', color: 'var(--color-gold)', fontFamily: 'Cormorant Garamond', fontStyle: 'italic' }}>Curating Portfolio...</p>
+                </motion.div>
+              ) : filteredWorks.length === 0 ? (
                 <motion.div
                   key="empty-state"
                   initial={{ opacity: 0 }}

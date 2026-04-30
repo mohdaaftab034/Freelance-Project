@@ -7,17 +7,13 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import AboutUs from './pages/AboutUs'
 import Services from './pages/Services'
+import ServiceDetails from './pages/ServiceDetails'
 import OurWork from './pages/OurWork'
 import Testimonials from './pages/Testimonials'
 import WorkProjectDetails from './pages/WorkProjectDetails'
 import ContactUs from './pages/ContactUs'
-import WeddingVenues from './pages/services/WeddingVenues'
-import DestinationWedding from './pages/services/DestinationWedding'
-import CorporateEvents from './pages/services/CorporateEvents'
-import SocialEvents from './pages/services/SocialEvents'
-import EntertainmentServices from './pages/services/EntertainmentServices'
-import CateringServices from './pages/services/CateringServices'
-import PhotographyVideography from './pages/services/PhotographyVideography'
+import TermsAndConditions from './pages/TermsAndConditions'
+import LegalPrivacy from './pages/LegalPrivacy'
 import NotFound from './pages/NotFound'
 
 function PageTransition({ children }) {
@@ -90,17 +86,13 @@ function App() {
                 <Route path="/" element={<PageTransition><Home /></PageTransition>} />
                 <Route path="/about-us" element={<PageTransition><AboutUs /></PageTransition>} />
                 <Route path="/services" element={<PageTransition><Services /></PageTransition>} />
+                <Route path="/services/:slug" element={<PageTransition><ServiceDetails /></PageTransition>} />
                 <Route path="/our-work" element={<PageTransition><OurWork /></PageTransition>} />
                 <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
                 <Route path="/our-work/:slug" element={<PageTransition><WorkProjectDetails /></PageTransition>} />
                 <Route path="/contact-us" element={<PageTransition><ContactUs /></PageTransition>} />
-                <Route path="/services/wedding-planning" element={<PageTransition><WeddingVenues /></PageTransition>} />
-                <Route path="/services/corporate-events" element={<PageTransition><CorporateEvents /></PageTransition>} />
-                <Route path="/services/birthday-private-parties" element={<PageTransition><SocialEvents /></PageTransition>} />
-                <Route path="/services/celebrity-events" element={<PageTransition><EntertainmentServices /></PageTransition>} />
-                <Route path="/services/destination-events" element={<PageTransition><DestinationWedding /></PageTransition>} />
-                <Route path="/services/floral-decoration" element={<PageTransition><PhotographyVideography /></PageTransition>} />
-                <Route path="/services/catering-coordination" element={<PageTransition><CateringServices /></PageTransition>} />
+                <Route path="/terms-and-conditions" element={<PageTransition><TermsAndConditions /></PageTransition>} />
+                <Route path="/privacy-policy" element={<PageTransition><LegalPrivacy /></PageTransition>} />
                 <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
               </Routes>
             </AnimatePresence>
